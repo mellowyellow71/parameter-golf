@@ -1,0 +1,100 @@
+# Parameter Golf — Experiment Configurations
+#
+# Global settings are shared by all experiments.
+# Each experiment specifies a name, training script, and env var overrides.
+#
+# Usage:
+#   python infra/launch.py batch --config infra/experiments.yaml
+#   python infra/launch.py batch --config infra/experiments.yaml --filter "lr-sweep"
+
+global:
+  project: "bryan-usage-0"
+  location: "us-central1"
+  data_bucket: "parameter-golf-data"
+  output_bucket: "bryan-usage-0-pgolf-experiments"
+  container_uri: "us-central1-docker.pkg.dev/bryan-usage-0/parameter-golf/training:latest"
+  use_spot: true
+
+experiments:
+  # --- Competition run (8x H100, full settings) ---
+  - name: "competition-gptq-ttt"
+    script: "train_gpt.py"
+    env:
+      GPTQ_ENABLED: "1"
+      GPTQ_N_BATCHES: "64"
+      TTT_ENABLED: "1"
+      EVAL_STRIDE: "64"
+      SEED: "1337"
+
+  # --- Baselines ---
+  - name: "baseline-9L-512d"
+    script: "train_gpt.py"
+    env:
+      NUM_LAYERS: "9"
+      MODEL_DIM: "512"
+      ITERATIONS: "20000"
+
+  # --- Learning rate sweep (experiment1) ---
+  - name: "exp1-lr-020"
+    script: "experiment1.py"
+    env:
+      MATRIX_LR: "0.020"
+      SCALAR_LR: "0.020"
+
+  - name: "exp1-lr-025"
+    script: "experiment1.py"
+    env:
+      MATRIX_LR: "0.025"
+      SCALAR_LR: "0.025"
+
+  - name: "exp1-lr-030"
+    script: "experiment1.py"
+    env:
+      MATRIX_LR: "0.030"
+      SCALAR_LR: "0.030"
+
+  - name: "exp1-lr-035"
+    script: "experiment1.py"
+    env:
+      MATRIX_LR: "0.035"
+      SCALAR_LR: "0.035"
+
+  # --- Architecture sweep ---
+  - name: "exp1-11L-mlp3"
+    script: "experiment1.py"
+    env:
+      NUM_LAYERS: "11"
+      MLP_MULT: "3.0"
+
+  - name: "exp1-13L-mlp2"
+    script: "experiment1.py"
+    env:
+      NUM_LAYERS: "13"
+      MLP_MULT: "2.0"
+
+  - name: "exp1-9L-mlp4"
+    script: "experiment1.py"
+    env:
+      NUM_LAYERS: "9"
+      MLP_MULT: "4.0"
+
+  # --- XSA ablation ---
+  - name: "exp1-xsa-0"
+    script: "experiment1.py"
+    env:
+      XSA_LAST_N: "0"
+
+  - name: "exp1-xsa-2"
+    script: "experiment1.py"
+    env:
+      XSA_LAST_N: "2"
+
+  - name: "exp1-xsa-6"
+    script: "experiment1.py"
+    env:
+      XSA_LAST_N: "6"
+
+  - name: "exp1-xsa-11"
+    script: "experiment1.py"
+    env:
+      XSA_LAST_N: "11"

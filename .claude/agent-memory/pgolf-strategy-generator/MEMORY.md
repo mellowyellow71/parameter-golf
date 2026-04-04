@@ -1,0 +1,3 @@
+- [Competition Rules & Legality](project_competition_rules.md) -- Core rules, artifact limits, TTT/GPTQ/n-gram legality boundaries
+- [Winning Model Patterns](project_winning_patterns.md) -- Autopsy findings, meta-analysis insights, confirmed winning stack
+- [Research Plan Status](project_research_plan_generated.md) -- 87 strategies generated, key priorities and confirmed dead ends

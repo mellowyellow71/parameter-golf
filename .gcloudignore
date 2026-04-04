@@ -1,0 +1,11 @@
+# Cloud Build ignore — only ship code, not data/models
+data/
+.venv*/
+records/
+logs/
+*.pt
+*.ptz
+*.pth
+*.bin
+.git/
+__pycache__/
