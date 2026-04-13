@@ -1,2 +1,5 @@
 google-cloud-aiplatform>=1.45.0
 pyyaml>=6.0
+gradio>=4.0
+pandas>=2.0
+plotly>=5.0
