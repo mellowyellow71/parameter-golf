@@ -131,8 +131,9 @@ def sync_code(instance: InstanceInfo, config: dict) -> bool:
 def ensure_data(instance: InstanceInfo, config: dict) -> bool:
     """Ensure training data is available on the instance.
 
-    Checks if the full dataset is present. If not, downloads it.
-    On H100 instances with fast networking, this takes ~2-3 minutes.
+    Checks for existing data shards. If we have at least 1 train + 1 val
+    shard, proceed immediately (training works with any shard count).
+    Only attempts download if we have zero data.
     """
     repo_dir = find_repo_dir(instance, config)
     data_dir = f"{repo_dir}/data/datasets/fineweb10B_sp1024"
@@ -140,30 +141,33 @@ def ensure_data(instance: InstanceInfo, config: dict) -> bool:
     # Check how many shards exist
     result = ssh_exec(instance, config,
         f"ls {data_dir}/fineweb_train_*.bin 2>/dev/null | wc -l")
-    shard_count = int(result.stdout.strip() or "0")
+    train_count = int(result.stdout.strip() or "0")
 
-    if shard_count >= 80:
-        print(f"  Training data present: {shard_count} shards")
+    result2 = ssh_exec(instance, config,
+        f"ls {data_dir}/fineweb_val_*.bin 2>/dev/null | wc -l")
+    val_count = int(result2.stdout.strip() or "0")
+
+    # Check tokenizer
+    result3 = ssh_exec(instance, config,
+        f"ls {repo_dir}/data/tokenizers/fineweb_1024_bpe.model 2>/dev/null | wc -l")
+    has_tokenizer = int(result3.stdout.strip() or "0") >= 1
+
+    if train_count >= 1 and val_count >= 1 and has_tokenizer:
+        print(f"  Training data ready: {train_count} train + {val_count} val shards")
         return True
 
-    print(f"  Only {shard_count} training shards found. Downloading full dataset...")
+    # Only download if we have nothing
+    print(f"  Missing data (train={train_count}, val={val_count}, tok={has_tokenizer}). Downloading minimal set...")
     result = ssh_exec(instance, config,
-        f"python3 {repo_dir}/data/cached_challenge_fineweb.py --variant sp1024 --train-shards 80",
-        timeout=600)
+        f"python3 {repo_dir}/data/cached_challenge_fineweb.py --variant sp1024 --train-shards 1",
+        timeout=180)
 
     if result.returncode == 0:
-        print("  Data download complete")
+        print("  Minimal data download complete")
         return True
-    else:
-        print(f"  Data download failed: {result.stderr[:200] if result.stderr else 'unknown'}")
-        # Check if we have enough to proceed (at least val + some train)
-        result2 = ssh_exec(instance, config,
-            f"ls {data_dir}/fineweb_val_*.bin 2>/dev/null | wc -l")
-        val_count = int(result2.stdout.strip() or "0")
-        if val_count >= 1 and shard_count >= 1:
-            print(f"  Proceeding with {shard_count} train + {val_count} val shards")
-            return True
-        return False
+
+    print(f"  Data download failed. Cannot proceed.")
+    return False
 
 
 # ---------------------------------------------------------------------------
