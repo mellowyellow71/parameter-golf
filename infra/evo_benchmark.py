@@ -112,9 +112,11 @@ def run_benchmark(target_path: str) -> float:
         if Path("kernels.py").exists():
             scp_to_instance(instance, config, ["kernels.py"], f"{repo_dir}/")
 
-        # 4. Ensure training data
+        # 4. Ensure training data (accepts whatever shards exist, no long download)
         eprint("[evo] Checking training data...")
-        ensure_data(instance, config)
+        if not ensure_data(instance, config):
+            eprint("[evo] FAILED: No training data available")
+            return 99.0
 
         # 5. Run training via torchrun
         target_name = Path(target_path).name
