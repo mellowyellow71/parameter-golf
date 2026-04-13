@@ -1,0 +1,54 @@
+# Parameter Golf — GCE Infrastructure Configuration
+#
+# Used by gce_provision.py, gce_run_experiment.py, and gce_batch.py
+# for direct GCE instance management (complements the Vertex AI path in launch.py).
+
+gce:
+  project: "bryan-usage-0"
+  golden_image: "pgolf-golden-v2"
+  boot_disk_size_gb: 200
+  boot_disk_type: "pd-ssd"
+  machine_type: "a3-highgpu-8g"
+  scopes:
+    - "https://www.googleapis.com/auth/cloud-platform"
+  network: "default"
+  output_bucket: "bryan-usage-0-pgolf-experiments"
+  data_bucket: "parameter-golf-data"
+
+  # Zone priority: US first (lowest latency to GCS), then Europe, then Asia/Pacific.
+  # All 19 zones confirmed to have a3-highgpu-8g machine type.
+  zones:
+    - us-central1-a
+    - us-central1-b
+    - us-central1-c
+    - us-west1-a
+    - us-west1-b
+    - us-east4-a
+    - us-east4-b
+    - us-east4-c
+    - europe-west1-b
+    - europe-west1-c
+    - europe-west3-c
+    - europe-west4-b
+    - europe-west4-c
+    - asia-east1-c
+    - asia-northeast1-b
+    - asia-southeast1-b
+    - asia-southeast1-c
+    - asia-south1-c
+    - australia-southeast1-c
+
+  # Provisioning strategy
+  prefer_spot: true
+  fallback_to_ondemand: true
+  ssh_user: "ray"
+  ssh_timeout_seconds: 300
+
+  # Experiment defaults
+  max_wallclock_seconds: 660        # 11 min (10 min train + 1 min buffer)
+  early_kill_step: 1000             # Check BPB at this step
+  early_kill_threshold_pct: 5       # Kill if >5% worse than best at step 1000
+  poll_interval_seconds: 30
+
+  # Instance naming
+  instance_prefix: "pgolf-exp"
