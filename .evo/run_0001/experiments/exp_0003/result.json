@@ -1,7 +1,8 @@
 {
   "eval_epoch": 1,
   "experiment_id": "exp_0003",
+  "reason": "sp1024 crashed (import/dependency issue)",
   "score": 99.0,
   "status": "discarded",
-  "timestamp": "2026-04-14T03:08:19+00:00"
+  "timestamp": "2026-04-14T07:26:56+00:00"
 }

@@ -122,7 +122,186 @@
       "description": "Higher weight decay",
       "tier": 1,
       "timestamp": "2026-04-13T22:36:47.542983"
+    },
+    "win-loop-early-025": {
+      "name": "win-loop-early-025",
+      "status": "pass",
+      "train_loss": 2.5423,
+      "last_step": 200,
+      "loss_decreased": true,
+      "error": "",
+      "script": "winning_base_decoded.py",
+      "env": {
+        "ENABLE_LOOPING_AT": "0.25"
+      },
+      "description": "Earlier recurrence activation (25% vs 35%)",
+      "tier": 1,
+      "timestamp": "2026-04-13T22:46:29.100142"
+    },
+    "win-warmdown-080": {
+      "name": "win-warmdown-080",
+      "status": "pass",
+      "train_loss": 2.778,
+      "last_step": 150,
+      "loss_decreased": true,
+      "error": "",
+      "script": "winning_base_decoded.py",
+      "env": {
+        "WARMDOWN_FRAC": "0.80"
+      },
+      "description": "Longer warmdown (80% vs 72%)",
+      "tier": 1,
+      "timestamp": "2026-04-13T22:46:55.071484"
+    },
+    "win-mlp-35": {
+      "name": "win-mlp-35",
+      "status": "pass",
+      "train_loss": 2.5584,
+      "last_step": 200,
+      "loss_decreased": true,
+      "error": "",
+      "script": "winning_base_decoded.py",
+      "env": {
+        "MLP_MULT": "3.5"
+      },
+      "description": "Narrower MLP (3.5x vs 4x, more steps in budget)",
+      "tier": 1,
+      "timestamp": "2026-04-13T22:55:55.739970"
+    },
+    "win-combo-qk525-wd010": {
+      "name": "win-combo-qk525-wd010",
+      "status": "pass",
+      "train_loss": 2.5406,
+      "last_step": 200,
+      "loss_decreased": true,
+      "error": "",
+      "script": "winning_base_decoded.py",
+      "env": {
+        "QK_GAIN_INIT": "5.25",
+        "MUON_WD": "0.10"
+      },
+      "description": "QK-Gain 5.25 + higher WD",
+      "tier": 1,
+      "timestamp": "2026-04-13T22:56:05.187834"
+    },
+    "win-combo-qk525-lr025": {
+      "name": "win-combo-qk525-lr025",
+      "status": "pass",
+      "train_loss": 2.5208,
+      "last_step": 200,
+      "loss_decreased": true,
+      "error": "",
+      "script": "winning_base_decoded.py",
+      "env": {
+        "QK_GAIN_INIT": "5.25",
+        "MATRIX_LR": "0.025"
+      },
+      "description": "QK-Gain 5.25 + higher LR",
+      "tier": 1,
+      "timestamp": "2026-04-13T23:06:33.374337"
+    },
+    "win-combo-3loop-parallel5": {
+      "name": "win-combo-3loop-parallel5",
+      "status": "pass",
+      "train_loss": 2.7751,
+      "last_step": 150,
+      "loss_decreased": true,
+      "error": "",
+      "script": "winning_base_decoded.py",
+      "env": {
+        "NUM_LOOPS": "3",
+        "PARALLEL_RESIDUAL_START": "5"
+      },
+      "description": "3x recurrence + earlier parallel",
+      "tier": 1,
+      "timestamp": "2026-04-13T23:06:33.802370"
+    },
+    "win-combo-wideloop-earlystart": {
+      "name": "win-combo-wideloop-earlystart",
+      "status": "error",
+      "train_loss": null,
+      "last_step": 0,
+      "loss_decreased": false,
+      "error": "Command '['gcloud', 'compute', 'ssh', 'ray@pgolf-exp-smoke-win-combo-wideloop-earlystart-20260413-230640', '--zone', 'us-central1-b', '--project', 'bryan-usage-0', '--strict-host-key-checking=no', '--command', 'tmux has-session -t training 2>/dev/null && echo running || echo stopped']' timed out after 15 seconds",
+      "script": "winning_base_decoded.py",
+      "env": {
+        "LOOP_START": "2",
+        "LOOP_END": "6",
+        "ENABLE_LOOPING_AT": "0.25"
+      },
+      "description": "Wide recurrence (2-6) + early activation",
+      "tier": 1,
+      "timestamp": "2026-04-13T23:10:30.794819"
+    },
+    "win-combo-mlp35-3loop": {
+      "name": "win-combo-mlp35-3loop",
+      "status": "pass",
+      "train_loss": 2.7874,
+      "last_step": 150,
+      "loss_decreased": true,
+      "error": "",
+      "script": "winning_base_decoded.py",
+      "env": {
+        "MLP_MULT": "3.5",
+        "NUM_LOOPS": "3"
+      },
+      "description": "Narrower MLP + 3x recurrence (more steps, more depth)",
+      "tier": 1,
+      "timestamp": "2026-04-13T23:16:14.710963"
+    },
+    "a1-adaptive-gptq": {
+      "name": "a1-adaptive-gptq",
+      "status": "pass",
+      "train_loss": 2.5445,
+      "last_step": 200,
+      "loss_decreased": true,
+      "error": "",
+      "script": "winning_base_decoded.py",
+      "env": {
+        "GPTQ_ADAPTIVE_CLIP": "1"
+      },
+      "description": "Per-layer GPTQ clip sigmas (tighter for MLP_down layers 9-10)"
+    },
+    "a1-stack-quickwins": {
+      "name": "a1-stack-quickwins",
+      "status": "pass",
+      "train_loss": 2.5418,
+      "last_step": 200,
+      "loss_decreased": true,
+      "error": "",
+      "script": "winning_base_decoded.py",
+      "env": {
+        "WARMDOWN_SHAPE": "sqrt",
+        "GPTQ_ADAPTIVE_CLIP": "1"
+      },
+      "description": "Stack sqrt cooldown + adaptive GPTQ (both orthogonal)"
+    },
+    "a1-sqrt-cooldown": {
+      "name": "a1-sqrt-cooldown",
+      "status": "pass",
+      "train_loss": 2.5431,
+      "last_step": 200,
+      "loss_decreased": true,
+      "error": "",
+      "script": "winning_base_decoded.py",
+      "env": {
+        "WARMDOWN_SHAPE": "sqrt"
+      },
+      "description": "1-sqrt cooldown (faster initial decay, slower tail) -- TMLR 2025"
+    },
+    "a1-cosine-cooldown": {
+      "name": "a1-cosine-cooldown",
+      "status": "pass",
+      "train_loss": 2.5412,
+      "last_step": 200,
+      "loss_decreased": true,
+      "error": "",
+      "script": "winning_base_decoded.py",
+      "env": {
+        "WARMDOWN_SHAPE": "cosine"
+      },
+      "description": "Cosine cooldown curve (compare against sqrt)"
     }
   },
-  "last_updated": "2026-04-13T22:36:47.543087"
+  "last_updated": "2026-04-14T00:33:03.638025"
 }
