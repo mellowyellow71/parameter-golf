@@ -592,8 +592,10 @@ def run_full(
             _update_stage(name, "full", {"status": "fail", "error": result.error})
             return result
 
-        # Poll until done — full run with GPTQ needs extra buffer
-        log_text = _poll_until_done(instance, config, 660, poll_interval)
+        # Poll until done — full pipeline: 600s train + 60s GPTQ + 90s sliding eval + buffer
+        # With TTT: add ~300s more for eval-time training
+        full_budget = 1200  # 20 minutes covers train + GPTQ + eval generously
+        log_text = _poll_until_done(instance, config, full_budget, poll_interval)
 
         # Analyze results
         parsed = _parse_log(log_text)
