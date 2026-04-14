@@ -1,0 +1,105 @@
+{
+  "next_id": 4,
+  "nodes": {
+    "exp_0000": {
+      "benchmark_result": null,
+      "branch": "evo/run_0002/exp_0000",
+      "children": [],
+      "commit": "63c4311038398ea2835b1766b3d9e455f3fc4e27",
+      "created_at": "2026-04-14T07:06:32+00:00",
+      "eval_epoch": 1,
+      "gate_result": null,
+      "gates": [],
+      "hypothesis": "ARCH: SP8192 winning (depth recur + parallel resid + skip gates, 1.0810 BPB reference)",
+      "id": "exp_0000",
+      "parent": "root",
+      "pruned_reason": null,
+      "score": null,
+      "status": "pending",
+      "updated_at": "2026-04-14T07:06:32+00:00",
+      "worktree": "/home/ray/parameter-golf/.evo/run_0002/worktrees/exp_0000"
+    },
+    "exp_0001": {
+      "benchmark_result": null,
+      "branch": "evo/run_0002/exp_0001",
+      "children": [],
+      "commit": "63c4311038398ea2835b1766b3d9e455f3fc4e27",
+      "created_at": "2026-04-14T07:06:32+00:00",
+      "eval_epoch": 1,
+      "gate_result": null,
+      "gates": [],
+      "hypothesis": "ARCH: SP4096 depth recurrence + MuonEq-R (different vocab/param tradeoff)",
+      "id": "exp_0001",
+      "parent": "root",
+      "pruned_reason": null,
+      "score": null,
+      "status": "pending",
+      "updated_at": "2026-04-14T07:06:32+00:00",
+      "worktree": "/home/ray/parameter-golf/.evo/run_0002/worktrees/exp_0001"
+    },
+    "exp_0002": {
+      "benchmark_result": null,
+      "branch": "evo/run_0002/exp_0002",
+      "children": [],
+      "commit": "63c4311038398ea2835b1766b3d9e455f3fc4e27",
+      "created_at": "2026-04-14T07:06:32+00:00",
+      "eval_epoch": 1,
+      "gate_result": null,
+      "gates": [],
+      "hypothesis": "ARCH: Mini depth recurrence + parallel residuals (880-line variant, different loop structure)",
+      "id": "exp_0002",
+      "parent": "root",
+      "pruned_reason": null,
+      "score": null,
+      "status": "pending",
+      "updated_at": "2026-04-14T07:06:32+00:00",
+      "worktree": "/home/ray/parameter-golf/.evo/run_0002/worktrees/exp_0002"
+    },
+    "exp_0003": {
+      "benchmark_result": null,
+      "branch": "evo/run_0002/exp_0003",
+      "children": [],
+      "commit": "63c4311038398ea2835b1766b3d9e455f3fc4e27",
+      "created_at": "2026-04-14T07:06:32+00:00",
+      "eval_epoch": 1,
+      "gate_result": null,
+      "gates": [],
+      "hypothesis": "ARCH: SP1024 original (XSA, BigramHash, SmearGate, Muon \u2014 our own architecture)",
+      "id": "exp_0003",
+      "parent": "root",
+      "pruned_reason": null,
+      "score": null,
+      "status": "pending",
+      "updated_at": "2026-04-14T07:06:32+00:00",
+      "worktree": "/home/ray/parameter-golf/.evo/run_0002/worktrees/exp_0003"
+    },
+    "root": {
+      "branch": null,
+      "children": [
+        "exp_0000",
+        "exp_0001",
+        "exp_0002",
+        "exp_0003"
+      ],
+      "commit": null,
+      "created_at": "2026-04-14T07:06:00+00:00",
+      "eval_epoch": null,
+      "gates": [
+        {
+          "added_at": "2026-04-14T07:06:08+00:00",
+          "command": "python3 -c \"import ast; ast.parse(open('{target}').read()); print('OK', file=__import__('sys').stderr)\"",
+          "name": "syntax_check"
+        }
+      ],
+      "hypothesis": "synthetic root",
+      "id": "root",
+      "parent": null,
+      "pruned_reason": null,
+      "score": null,
+      "status": "root",
+      "updated_at": "2026-04-14T07:06:08+00:00",
+      "worktree": null
+    }
+  },
+  "root": "root"
+}

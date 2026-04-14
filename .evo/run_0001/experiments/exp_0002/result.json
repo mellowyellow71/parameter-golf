@@ -1,7 +1,8 @@
 {
   "eval_epoch": 1,
   "experiment_id": "exp_0002",
+  "reason": "mini-recur crashed on golden image",
   "score": 99.0,
   "status": "discarded",
-  "timestamp": "2026-04-14T03:08:20+00:00"
+  "timestamp": "2026-04-14T07:26:56+00:00"
 }
