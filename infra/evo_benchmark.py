@@ -73,124 +73,49 @@ def eprint(*args, **kwargs):
 
 
 def run_benchmark(target_path: str) -> float:
-    """Dispatch the target script to GCE H100 and return BPB.
+    """Run the target through the funnel: smoke (1xH100) → qualify (8xH100 short).
 
-    Returns the final BPB score, or 99.0 on failure.
+    Returns the qualify step-1000 BPB estimate, or 99.0 on failure.
+    Uses the efficient funnel pipeline instead of expensive full runs.
     """
-    # Add infra/ to path for imports
     sys.path.insert(0, os.path.join(os.path.dirname(__file__)))
 
-    from gce_provision import load_config, find_and_create, wait_for_ssh, scp_to_instance, ssh_exec, delete_instance
-    from gce_run_experiment import _parse_log, find_repo_dir, ensure_data
+    from gce_provision import load_config
+    from funnel import run_smoke, run_qualify
 
     config = load_config("infra/gce_config.yaml")
     exp_name = f"evo-{_EXPERIMENT_ID}"
-    instance = None
+
+    target_name = Path(target_path).name
+    env = {"VOCAB_SIZE": "1024", "COMPRESSOR": "lzma"}  # Use SP1024 data on golden image
 
     try:
-        # 1. Provision
-        eprint(f"[evo] Provisioning 8xH100 instance for {exp_name}...")
-        instance = find_and_create(exp_name, config)
-        if instance is None:
-            eprint("[evo] FAILED: No H100 instance available in any zone")
+        # Stage 1: Smoke test on 1xH100 (cheap, fast, ~$0.25)
+        eprint(f"[evo] Stage 1: Smoke test on 1xH100...")
+        smoke = run_smoke(exp_name, target_name, env, config, extra_files=[target_path])
+
+        if smoke["status"] != "pass":
+            eprint(f"[evo] SMOKE FAIL: {smoke.get('error', 'unknown')}")
             return 99.0
 
-        eprint(f"[evo] Instance: {instance.name} in {instance.zone}")
+        eprint(f"[evo] Smoke passed: train_loss={smoke.get('train_loss_last', '?')} at step {smoke.get('last_step', '?')}")
 
-        # 2. Wait for SSH
-        if not wait_for_ssh(instance, config):
-            eprint("[evo] FAILED: SSH timeout")
-            return 99.0
+        # Stage 2: Qualify on 8xH100 (get step-1000 BPB estimate, ~$2)
+        eprint(f"[evo] Stage 2: Qualify on 8xH100 (180s)...")
+        qualify = run_qualify(exp_name, target_name, env, config, extra_files=[target_path])
 
-        # 3. Sync the target file (the modified experiment1.py)
-        eprint(f"[evo] Syncing target: {target_path}")
-        repo_dir = find_repo_dir(instance, config)
+        if qualify["status"] != "pass":
+            eprint(f"[evo] QUALIFY FAIL: {qualify.get('error', 'unknown')}")
+            # Return smoke loss as a rough score (higher = worse)
+            return smoke.get("train_loss_last", 99.0)
 
-        # SCP the target file
-        scp_to_instance(instance, config, [target_path], f"{repo_dir}/")
-        # Also sync kernels.py if it exists
-        if Path("kernels.py").exists():
-            scp_to_instance(instance, config, ["kernels.py"], f"{repo_dir}/")
-
-        # 4. Ensure training data (accepts whatever shards exist, no long download)
-        eprint("[evo] Checking training data...")
-        if not ensure_data(instance, config):
-            eprint("[evo] FAILED: No training data available")
-            return 99.0
-
-        # 5. Run training via torchrun
-        target_name = Path(target_path).name
-        eprint(f"[evo] Starting training: torchrun --nproc_per_node=8 {target_name}")
-
-        train_cmd = (
-            f"cd {repo_dir} && "
-            f"export DATA_PATH={repo_dir}/data/datasets/fineweb10B_sp1024/ && "
-            f"export TOKENIZER_PATH={repo_dir}/data/tokenizers/fineweb_1024_bpe.model && "
-            f"export RUN_ID={exp_name} && "
-            f"torchrun --standalone --nproc_per_node=8 {target_name} "
-            f"2>&1 | tee /tmp/training_output.log; "
-            f"echo EXIT_CODE=$? >> /tmp/training_output.log"
-        )
-
-        # Start in tmux so it survives SSH drops
-        ssh_exec(instance, config, "tmux kill-session -t training 2>/dev/null || true")
-        ssh_exec(instance, config, f"tmux new-session -d -s training '{train_cmd}'", timeout=30)
-
-        # 6. Monitor training
-        eprint("[evo] Monitoring training...")
-        poll_interval = 30
-        max_wait = 900  # 15 minutes
-        start = time.time()
-        last_step = 0
-
-        while time.time() - start < max_wait:
-            # Check tmux alive
-            check = ssh_exec(instance, config,
-                "tmux has-session -t training 2>/dev/null && echo running || echo stopped",
-                timeout=15)
-            alive = "running" in check.stdout
-
-            # Read log
-            log_result = ssh_exec(instance, config, "cat /tmp/training_output.log 2>/dev/null", timeout=15)
-            parsed = _parse_log(log_result.stdout)
-
-            if parsed["current_step"] > last_step:
-                bpb_str = f" BPB={parsed['final_bpb']:.4f}" if parsed.get("final_bpb") else ""
-                eprint(f"[evo] Step {parsed['current_step']}{bpb_str}")
-                last_step = parsed["current_step"]
-
-            if not alive:
-                break
-
-            time.sleep(poll_interval)
-
-        # 7. Get final log and parse BPB
-        final_log = ssh_exec(instance, config, "cat /tmp/training_output.log 2>/dev/null", timeout=15)
-        parsed = _parse_log(final_log.stdout)
-
-        bpb = parsed.get("final_bpb") or 99.0
-        error = parsed.get("error")
-
-        if error:
-            eprint(f"[evo] Training error: {error}")
-        if bpb < 99:
-            eprint(f"[evo] Final BPB: {bpb:.6f}")
-        else:
-            eprint("[evo] No BPB result obtained")
-
+        bpb = qualify.get("step_1000_bpb") or qualify.get("val_bpb") or 99.0
+        eprint(f"[evo] Qualify BPB estimate: {bpb:.6f}")
         return bpb
 
     except Exception as e:
         eprint(f"[evo] Exception: {e}")
         return 99.0
-    finally:
-        # Always cleanup
-        if instance:
-            eprint(f"[evo] Deleting instance {instance.name}...")
-            try:
-                delete_instance(instance.name, instance.zone, config["project"])
-            except Exception as e:
-                eprint(f"[evo] Cleanup warning: {e}")
 
 
 def main():
