@@ -86,13 +86,20 @@ def run_benchmark(target_path: str) -> float:
     config = load_config("infra/gce_config.yaml")
     exp_name = f"evo-{_EXPERIMENT_ID}"
 
+    # Copy the target file to the repo root so funnel's sync_code picks it up
+    import shutil
     target_name = Path(target_path).name
-    env = {"VOCAB_SIZE": "1024", "COMPRESSOR": "lzma"}  # Use SP1024 data on golden image
+    repo_copy = Path(target_name)
+    if Path(target_path).resolve() != repo_copy.resolve():
+        shutil.copy2(target_path, repo_copy)
+        eprint(f"[evo] Copied target to {repo_copy}")
+
+    env = {"VOCAB_SIZE": "1024", "COMPRESSOR": "lzma"}
 
     try:
         # Stage 1: Smoke test on 1xH100 (cheap, fast, ~$0.25)
         eprint(f"[evo] Stage 1: Smoke test on 1xH100...")
-        smoke = run_smoke(exp_name, target_name, env, config, extra_files=[target_path])
+        smoke = run_smoke(exp_name, target_name, env, config)
 
         if smoke["status"] != "pass":
             eprint(f"[evo] SMOKE FAIL: {smoke.get('error', 'unknown')}")
@@ -100,18 +107,10 @@ def run_benchmark(target_path: str) -> float:
 
         eprint(f"[evo] Smoke passed: train_loss={smoke.get('train_loss_last', '?')} at step {smoke.get('last_step', '?')}")
 
-        # Stage 2: Qualify on 8xH100 (get step-1000 BPB estimate, ~$2)
-        eprint(f"[evo] Stage 2: Qualify on 8xH100 (180s)...")
-        qualify = run_qualify(exp_name, target_name, env, config, extra_files=[target_path])
-
-        if qualify["status"] != "pass":
-            eprint(f"[evo] QUALIFY FAIL: {qualify.get('error', 'unknown')}")
-            # Return smoke loss as a rough score (higher = worse)
-            return smoke.get("train_loss_last", 99.0)
-
-        bpb = qualify.get("step_1000_bpb") or qualify.get("val_bpb") or 99.0
-        eprint(f"[evo] Qualify BPB estimate: {bpb:.6f}")
-        return bpb
+        # Return smoke train_loss as score (skip qualify for now — faster iteration)
+        score = smoke.get("train_loss_last", 99.0)
+        eprint(f"[evo] Score: {score}")
+        return score
 
     except Exception as e:
         eprint(f"[evo] Exception: {e}")
