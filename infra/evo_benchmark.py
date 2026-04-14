@@ -101,15 +101,15 @@ def run_benchmark(target_path: str) -> float:
         eprint(f"[evo] Stage 1: Smoke test on 1xH100...")
         smoke = run_smoke(exp_name, target_name, env, config)
 
-        if smoke["status"] != "pass":
-            eprint(f"[evo] SMOKE FAIL: {smoke.get('error', 'unknown')}")
+        if smoke.status != "pass":
+            eprint(f"[evo] SMOKE FAIL: {smoke.error or 'unknown'}")
             return 99.0
 
-        eprint(f"[evo] Smoke passed: train_loss={smoke.get('train_loss_last', '?')} at step {smoke.get('last_step', '?')}")
+        eprint(f"[evo] Smoke passed: train_loss={smoke.train_loss_last} at step {smoke.last_step}")
 
-        # Return smoke train_loss as score (skip qualify for now — faster iteration)
-        score = smoke.get("train_loss_last", 99.0)
-        eprint(f"[evo] Score: {score}")
+        # Return smoke train_loss as score (matches baseline scoring: train_loss@step200)
+        score = smoke.train_loss_last if smoke.train_loss_last is not None else 99.0
+        eprint(f"[evo] Score (train_loss): {score}")
         return score
 
     except Exception as e:
