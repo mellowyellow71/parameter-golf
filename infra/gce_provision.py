@@ -142,17 +142,20 @@ def _build_create_cmd(
     zone: str,
     config: dict,
     spot: bool = True,
+    machine_type_override: str | None = None,
 ) -> list[str]:
     """Build the gcloud compute instances create command.
 
-    IMPORTANT: a3-highgpu-8g bundles 8x H100 GPUs and 16 local SSDs automatically.
-    The --accelerator flag must NOT be used — it conflicts with bundled accelerators.
+    IMPORTANT: a3-highgpu-8g and a3-highgpu-1g both bundle H100 GPUs and
+    local SSDs automatically. The --accelerator flag must NOT be used —
+    it conflicts with bundled accelerators.
     """
+    machine_type = machine_type_override or config["machine_type"]
     cmd = [
         "compute", "instances", "create", instance_name,
         "--project", config["project"],
         "--zone", zone,
-        "--machine-type", config["machine_type"],
+        "--machine-type", machine_type,
         "--image", config["golden_image"],
         "--image-project", config["project"],
         "--boot-disk-size", f"{config['boot_disk_size_gb']}GB",
@@ -178,8 +181,12 @@ def create_instance(
     zone: str,
     config: dict,
     spot: bool = True,
+    machine_type: str | None = None,
 ) -> Optional[InstanceInfo]:
-    """Create an a3-highgpu-8g instance from the golden image.
+    """Create a GCE instance from the golden image.
+
+    Args:
+        machine_type: Override the config default (e.g. "a3-highgpu-1g" for smoke tests).
 
     Returns InstanceInfo on success, None on failure.
     """
@@ -190,7 +197,8 @@ def create_instance(
     # GCE name max 63 chars
     instance_name = instance_name[:63]
 
-    cmd = _build_create_cmd(instance_name, zone, config, spot=spot)
+    cmd = _build_create_cmd(instance_name, zone, config, spot=spot,
+                            machine_type_override=machine_type)
     prov_model = "SPOT" if spot else "STANDARD"
 
     print(f"  Creating {prov_model} instance {instance_name} in {zone}...", flush=True)
@@ -252,11 +260,15 @@ def find_and_create(
     name_suffix: str,
     config: dict,
     exclude_zones: list[str] | None = None,
+    machine_type: str | None = None,
 ) -> Optional[InstanceInfo]:
     """Try zones in priority order until an instance is created.
 
     Phase 1: SPOT in all zones (if prefer_spot=true).
     Phase 2: STANDARD in all zones (if fallback_to_ondemand=true).
+
+    Args:
+        machine_type: Override the config default (e.g. "a3-highgpu-1g" for smoke tests).
 
     Returns InstanceInfo or None if all zones exhausted.
     """
@@ -278,7 +290,8 @@ def find_and_create(
     for phase_name, spot in phases:
         print(f"\n--- Trying {phase_name} across {len(zones)} zones ---")
         for zone in zones:
-            instance = create_instance(name_suffix, zone, config, spot=spot)
+            instance = create_instance(name_suffix, zone, config, spot=spot,
+                                       machine_type=machine_type)
             if instance is not None:
                 print(f"\n  Instance created: {instance.name}")
                 print(f"  Zone: {instance.zone}")
