@@ -136,6 +136,26 @@ STRATEGIES: list[Strategy] = [
              {"MLP_MULT": "3.5", "NUM_LOOPS": "3"},
              "Narrower MLP + 3x recurrence (more steps, more depth)", tier=1, source="combination"),
 
+    # === PHASE 1 QUICK WINS (new features from competition analysis) ===
+    Strategy("p1-sqrt-cooldown", "winning_base_decoded.py",
+             {"WARMDOWN_SHAPE": "sqrt"},
+             "1-sqrt cooldown (faster initial decay, slower tail)", tier=0, source="pgolf-meta"),
+    Strategy("p1-cosine-cooldown", "winning_base_decoded.py",
+             {"WARMDOWN_SHAPE": "cosine"},
+             "Cosine cooldown curve", tier=0, source="pgolf-meta"),
+    Strategy("p1-adaptive-gptq", "winning_base_decoded.py",
+             {"GPTQ_ADAPTIVE_CLIP": "1"},
+             "Per-layer GPTQ clip (tighter for MLP_down)", tier=0, source="model-autopsy"),
+    Strategy("p1-int7-embeds", "winning_base_decoded.py",
+             {"EMBED_BITS": "7"},
+             "Int7 embeddings (frees 62KB for matrices)", tier=0, source="pgolf-meta"),
+    Strategy("p1-batch-warmup", "winning_base_decoded.py",
+             {"BATCH_WARMUP_FRAC": "0.3"},
+             "Ramp batch 262K->786K over first 30%", tier=0, source="pgolf-meta"),
+    Strategy("p1-stack-quickwins", "winning_base_decoded.py",
+             {"WARMDOWN_SHAPE": "sqrt", "GPTQ_ADAPTIVE_CLIP": "1", "EMBED_BITS": "7"},
+             "Stack all quick wins (sqrt + adaptive GPTQ + int7)", tier=0, source="combination"),
+
     # === OUR OLD ARCHITECTURE VARIANTS (experiment1.py SP1024) ===
     Strategy("old-baseline", "experiment1.py",
              {},

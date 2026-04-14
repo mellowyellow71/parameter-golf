@@ -1,0 +1,8 @@
+{
+  "eval_epoch": 1,
+  "experiment_id": "exp_0001",
+  "reason": "PyTorch cu130/cu126 mismatch, fixed golden image",
+  "score": 99.0,
+  "status": "discarded",
+  "timestamp": "2026-04-13T21:19:01+00:00"
+}

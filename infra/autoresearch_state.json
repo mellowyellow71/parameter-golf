@@ -1,0 +1,402 @@
+{
+  "autoresearch_version": 1,
+  "cycle_count": 10,
+  "phase": "RECORD",
+  "started_at": "2026-04-13T02:30:47.374881",
+  "last_cycle_at": "2026-04-13T17:57:49.243229",
+  "generated_strategies": [
+    {
+      "name": "AUTO-perturb-qk_gain_init-2.0-seed1337",
+      "origin": "perturbation",
+      "hypothesis": "Perturb QK_GAIN_INIT up from 1.5 to 2.0",
+      "env": {
+        "VOCAB_SIZE": "998",
+        "QK_GAIN_INIT": "2.0"
+      },
+      "script": "experiment1.py",
+      "seeds": [
+        1337
+      ],
+      "priority": 50,
+      "status": "pending"
+    },
+    {
+      "name": "AUTO-perturb-qk_gain_init-1.0-seed1337",
+      "origin": "perturbation",
+      "hypothesis": "Perturb QK_GAIN_INIT down from 1.5 to 1.0",
+      "env": {
+        "VOCAB_SIZE": "998",
+        "QK_GAIN_INIT": "1.0"
+      },
+      "script": "experiment1.py",
+      "seeds": [
+        1337
+      ],
+      "priority": 50,
+      "status": "pending"
+    },
+    {
+      "name": "AUTO-perturb-mlp_mult-3.5-seed1337",
+      "origin": "perturbation",
+      "hypothesis": "Perturb MLP_MULT up from 3.0 to 3.5",
+      "env": {
+        "VOCAB_SIZE": "998",
+        "MLP_MULT": "3.5"
+      },
+      "script": "experiment1.py",
+      "seeds": [
+        1337
+      ],
+      "priority": 50,
+      "status": "pending"
+    },
+    {
+      "name": "AUTO-perturb-mlp_mult-2.5-seed1337",
+      "origin": "perturbation",
+      "hypothesis": "Perturb MLP_MULT down from 3.0 to 2.5",
+      "env": {
+        "VOCAB_SIZE": "998",
+        "MLP_MULT": "2.5"
+      },
+      "script": "experiment1.py",
+      "seeds": [
+        1337
+      ],
+      "priority": 50,
+      "status": "pending"
+    },
+    {
+      "name": "AUTO-perturb-num_layers-12-seed1337",
+      "origin": "perturbation",
+      "hypothesis": "Perturb NUM_LAYERS up from 11.0 to 12",
+      "env": {
+        "VOCAB_SIZE": "998",
+        "NUM_LAYERS": "12"
+      },
+      "script": "experiment1.py",
+      "seeds": [
+        1337
+      ],
+      "priority": 50,
+      "status": "pending"
+    },
+    {
+      "name": "AUTO-perturb-num_layers-10-seed1337",
+      "origin": "perturbation",
+      "hypothesis": "Perturb NUM_LAYERS down from 11.0 to 10",
+      "env": {
+        "VOCAB_SIZE": "998",
+        "NUM_LAYERS": "10"
+      },
+      "script": "experiment1.py",
+      "seeds": [
+        1337
+      ],
+      "priority": 50,
+      "status": "pending"
+    },
+    {
+      "name": "AUTO-perturb-model_dim-576-seed1337",
+      "origin": "perturbation",
+      "hypothesis": "Perturb MODEL_DIM up from 512.0 to 576",
+      "env": {
+        "VOCAB_SIZE": "998",
+        "MODEL_DIM": "576"
+      },
+      "script": "experiment1.py",
+      "seeds": [
+        1337
+      ],
+      "priority": 50,
+      "status": "pending"
+    },
+    {
+      "name": "AUTO-perturb-model_dim-448-seed1337",
+      "origin": "perturbation",
+      "hypothesis": "Perturb MODEL_DIM down from 512.0 to 448",
+      "env": {
+        "VOCAB_SIZE": "998",
+        "MODEL_DIM": "448"
+      },
+      "script": "experiment1.py",
+      "seeds": [
+        1337
+      ],
+      "priority": 50,
+      "status": "pending"
+    },
+    {
+      "name": "AUTO-perturb-matrix_lr-0.03-seed1337",
+      "origin": "perturbation",
+      "hypothesis": "Perturb MATRIX_LR up from 0.025 to 0.030000000000000002",
+      "env": {
+        "VOCAB_SIZE": "998",
+        "MATRIX_LR": "0.03"
+      },
+      "script": "experiment1.py",
+      "seeds": [
+        1337
+      ],
+      "priority": 50,
+      "status": "pending"
+    },
+    {
+      "name": "AUTO-perturb-matrix_lr-0.02-seed1337",
+      "origin": "perturbation",
+      "hypothesis": "Perturb MATRIX_LR down from 0.025 to 0.02",
+      "env": {
+        "VOCAB_SIZE": "998",
+        "MATRIX_LR": "0.02"
+      },
+      "script": "experiment1.py",
+      "seeds": [
+        1337
+      ],
+      "priority": 50,
+      "status": "pending"
+    },
+    {
+      "name": "AUTO-perturb-scalar_lr-0.03-seed1337",
+      "origin": "perturbation",
+      "hypothesis": "Perturb SCALAR_LR up from 0.025 to 0.030000000000000002",
+      "env": {
+        "VOCAB_SIZE": "998",
+        "SCALAR_LR": "0.03"
+      },
+      "script": "experiment1.py",
+      "seeds": [
+        1337
+      ],
+      "priority": 50,
+      "status": "pending"
+    },
+    {
+      "name": "AUTO-perturb-scalar_lr-0.02-seed1337",
+      "origin": "perturbation",
+      "hypothesis": "Perturb SCALAR_LR down from 0.025 to 0.02",
+      "env": {
+        "VOCAB_SIZE": "998",
+        "SCALAR_LR": "0.02"
+      },
+      "script": "experiment1.py",
+      "seeds": [
+        1337
+      ],
+      "priority": 50,
+      "status": "pending"
+    },
+    {
+      "name": "AUTO-perturb-muon_momentum-0.999-seed1337",
+      "origin": "perturbation",
+      "hypothesis": "Perturb MUON_MOMENTUM up from 0.99 to 0.999",
+      "env": {
+        "VOCAB_SIZE": "998",
+        "MUON_MOMENTUM": "0.999"
+      },
+      "script": "experiment1.py",
+      "seeds": [
+        1337
+      ],
+      "priority": 50,
+      "status": "pending"
+    },
+    {
+      "name": "AUTO-perturb-muon_momentum-0.98-seed1337",
+      "origin": "perturbation",
+      "hypothesis": "Perturb MUON_MOMENTUM down from 0.99 to 0.98",
+      "env": {
+        "VOCAB_SIZE": "998",
+        "MUON_MOMENTUM": "0.98"
+      },
+      "script": "experiment1.py",
+      "seeds": [
+        1337
+      ],
+      "priority": 50,
+      "status": "pending"
+    },
+    {
+      "name": "AUTO-perturb-muon_wd-0.05-seed1337",
+      "origin": "perturbation",
+      "hypothesis": "Perturb MUON_WD up from 0.04 to 0.05",
+      "env": {
+        "VOCAB_SIZE": "998",
+        "MUON_WD": "0.05"
+      },
+      "script": "experiment1.py",
+      "seeds": [
+        1337
+      ],
+      "priority": 50,
+      "status": "pending"
+    },
+    {
+      "name": "AUTO-perturb-muon_wd-0.03-seed1337",
+      "origin": "perturbation",
+      "hypothesis": "Perturb MUON_WD down from 0.04 to 0.03",
+      "env": {
+        "VOCAB_SIZE": "998",
+        "MUON_WD": "0.03"
+      },
+      "script": "experiment1.py",
+      "seeds": [
+        1337
+      ],
+      "priority": 50,
+      "status": "pending"
+    },
+    {
+      "name": "AUTO-perturb-xsa_last_n-5-seed1337",
+      "origin": "perturbation",
+      "hypothesis": "Perturb XSA_LAST_N up from 4.0 to 5",
+      "env": {
+        "VOCAB_SIZE": "998",
+        "XSA_LAST_N": "5"
+      },
+      "script": "experiment1.py",
+      "seeds": [
+        1337
+      ],
+      "priority": 50,
+      "status": "pending"
+    },
+    {
+      "name": "AUTO-perturb-xsa_last_n-3-seed1337",
+      "origin": "perturbation",
+      "hypothesis": "Perturb XSA_LAST_N down from 4.0 to 3",
+      "env": {
+        "VOCAB_SIZE": "998",
+        "XSA_LAST_N": "3"
+      },
+      "script": "experiment1.py",
+      "seeds": [
+        1337
+      ],
+      "priority": 50,
+      "status": "pending"
+    },
+    {
+      "name": "AUTO-perturb-warmdown_iters-4000-seed1337",
+      "origin": "perturbation",
+      "hypothesis": "Perturb WARMDOWN_ITERS up from 3500.0 to 4000",
+      "env": {
+        "VOCAB_SIZE": "998",
+        "WARMDOWN_ITERS": "4000"
+      },
+      "script": "experiment1.py",
+      "seeds": [
+        1337
+      ],
+      "priority": 50,
+      "status": "pending"
+    },
+    {
+      "name": "AUTO-perturb-warmdown_iters-3000-seed1337",
+      "origin": "perturbation",
+      "hypothesis": "Perturb WARMDOWN_ITERS down from 3500.0 to 3000",
+      "env": {
+        "VOCAB_SIZE": "998",
+        "WARMDOWN_ITERS": "3000"
+      },
+      "script": "experiment1.py",
+      "seeds": [
+        1337
+      ],
+      "priority": 50,
+      "status": "pending"
+    },
+    {
+      "name": "AUTO-perturb-swa_every-60-seed1337",
+      "origin": "perturbation",
+      "hypothesis": "Perturb SWA_EVERY up from 50.0 to 60",
+      "env": {
+        "VOCAB_SIZE": "998",
+        "SWA_EVERY": "60"
+      },
+      "script": "experiment1.py",
+      "seeds": [
+        1337
+      ],
+      "priority": 50,
+      "status": "pending"
+    },
+    {
+      "name": "AUTO-perturb-swa_every-40-seed1337",
+      "origin": "perturbation",
+      "hypothesis": "Perturb SWA_EVERY down from 50.0 to 40",
+      "env": {
+        "VOCAB_SIZE": "998",
+        "SWA_EVERY": "40"
+      },
+      "script": "experiment1.py",
+      "seeds": [
+        1337
+      ],
+      "priority": 50,
+      "status": "pending"
+    },
+    {
+      "name": "AUTO-perturb-logit_softcap-35.0-seed1337",
+      "origin": "perturbation",
+      "hypothesis": "Perturb LOGIT_SOFTCAP up from 30.0 to 35.0",
+      "env": {
+        "VOCAB_SIZE": "998",
+        "LOGIT_SOFTCAP": "35.0"
+      },
+      "script": "experiment1.py",
+      "seeds": [
+        1337
+      ],
+      "priority": 50,
+      "status": "pending"
+    },
+    {
+      "name": "AUTO-perturb-logit_softcap-25.0-seed1337",
+      "origin": "perturbation",
+      "hypothesis": "Perturb LOGIT_SOFTCAP down from 30.0 to 25.0",
+      "env": {
+        "VOCAB_SIZE": "998",
+        "LOGIT_SOFTCAP": "25.0"
+      },
+      "script": "experiment1.py",
+      "seeds": [
+        1337
+      ],
+      "priority": 50,
+      "status": "pending"
+    },
+    {
+      "name": "AUTO-perturb-muon_backend_steps-6-seed1337",
+      "origin": "perturbation",
+      "hypothesis": "Perturb MUON_BACKEND_STEPS up from 5.0 to 6",
+      "env": {
+        "VOCAB_SIZE": "998",
+        "MUON_BACKEND_STEPS": "6"
+      },
+      "script": "experiment1.py",
+      "seeds": [
+        1337
+      ],
+      "priority": 50,
+      "status": "pending"
+    },
+    {
+      "name": "AUTO-perturb-muon_backend_steps-4-seed1337",
+      "origin": "perturbation",
+      "hypothesis": "Perturb MUON_BACKEND_STEPS down from 5.0 to 4",
+      "env": {
+        "VOCAB_SIZE": "998",
+        "MUON_BACKEND_STEPS": "4"
+      },
+      "script": "experiment1.py",
+      "seeds": [
+        1337
+      ],
+      "priority": 50,
+      "status": "pending"
+    }
+  ],
+  "dimension_analysis": {},
+  "early_killed_patterns": [],
+  "total_gpu_hours": 2.402438540277778
+}

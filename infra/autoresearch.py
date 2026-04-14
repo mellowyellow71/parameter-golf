@@ -61,27 +61,39 @@ MAX_GENERATED_PER_CYCLE = 5
 H100_SPOT_COST_PER_HOUR = 24.48  # a3-highgpu-8g SPOT approximate
 
 # Searchable hyperparameter dimensions with ranges and step sizes.
-# Must stay in sync with experiment1.py Hyperparameters class.
+# Must stay in sync with winning_base_decoded.py Hyperparameters class.
 SEARCHABLE_DIMENSIONS: dict[str, dict] = {
-    "QK_GAIN_INIT":       {"default": 1.5,   "min": 0.5,  "max": 10.0, "type": "float", "step": 0.5},
-    "MLP_MULT":           {"default": 3.0,   "min": 2.0,  "max": 5.0,  "type": "float", "step": 0.5},
-    "NUM_LAYERS":         {"default": 11,    "min": 8,    "max": 15,   "type": "int",   "step": 1},
-    "MODEL_DIM":          {"default": 512,   "min": 384,  "max": 768,  "type": "int",   "step": 64},
-    "MATRIX_LR":          {"default": 0.025, "min": 0.01, "max": 0.05, "type": "float", "step": 0.005},
-    "SCALAR_LR":          {"default": 0.025, "min": 0.01, "max": 0.05, "type": "float", "step": 0.005},
-    "MUON_MOMENTUM":      {"default": 0.99,  "min": 0.90, "max": 0.999,"type": "float", "step": 0.01},
-    "MUON_WD":            {"default": 0.04,  "min": 0.01, "max": 0.15, "type": "float", "step": 0.01},
-    "XSA_LAST_N":         {"default": 4,     "min": 0,    "max": 11,   "type": "int",   "step": 1},
-    "WARMDOWN_ITERS":     {"default": 3500,  "min": 2000, "max": 6000, "type": "int",   "step": 500},
-    "SWA_EVERY":          {"default": 50,    "min": 10,   "max": 200,  "type": "int",   "step": 10},
-    "LOGIT_SOFTCAP":      {"default": 30.0,  "min": 15.0, "max": 60.0, "type": "float", "step": 5.0},
-    "MUON_BACKEND_STEPS": {"default": 5,     "min": 2,    "max": 7,    "type": "int",   "step": 1},
+    # Aligned with winning_base_decoded.py defaults (SP8192 stack)
+    "QK_GAIN_INIT":       {"default": 5.25,  "min": 3.0,  "max": 8.0,  "type": "float", "step": 0.25},
+    "MLP_MULT":           {"default": 4.0,   "min": 3.0,  "max": 5.0,  "type": "float", "step": 0.25},
+    "NUM_LAYERS":         {"default": 11,    "min": 9,    "max": 13,   "type": "int",   "step": 1},
+    "MODEL_DIM":          {"default": 512,   "min": 448,  "max": 640,  "type": "int",   "step": 64},
+    "MATRIX_LR":          {"default": 0.022, "min": 0.01, "max": 0.04, "type": "float", "step": 0.004},
+    "SCALAR_LR":          {"default": 0.02,  "min": 0.01, "max": 0.04, "type": "float", "step": 0.005},
+    "MUON_MOMENTUM":      {"default": 0.99,  "min": 0.95, "max": 0.999,"type": "float", "step": 0.005},
+    "MUON_WD":            {"default": 0.095, "min": 0.05, "max": 0.15, "type": "float", "step": 0.01},
+    "XSA_LAST_N":         {"default": 11,    "min": 4,    "max": 11,   "type": "int",   "step": 1},
+    "WARMDOWN_FRAC":      {"default": 0.72,  "min": 0.5,  "max": 0.85, "type": "float", "step": 0.05},
+    "LOGIT_SOFTCAP":      {"default": 30.0,  "min": 20.0, "max": 50.0, "type": "float", "step": 5.0},
+    "MUON_BACKEND_STEPS": {"default": 5,     "min": 3,    "max": 7,    "type": "int",   "step": 1},
+    "EMBED_LR":           {"default": 0.6,   "min": 0.3,  "max": 1.0,  "type": "float", "step": 0.1},
+    "EMA_DECAY":          {"default": 0.9965,"min": 0.993, "max": 0.999,"type": "float", "step": 0.001},
+    "EMBED_WD":           {"default": 0.085, "min": 0.04, "max": 0.15, "type": "float", "step": 0.01},
+    "GRAD_CLIP_NORM":     {"default": 0.3,   "min": 0.1,  "max": 1.0,  "type": "float", "step": 0.1},
+    "NUM_LOOPS":          {"default": 2,     "min": 1,    "max": 4,    "type": "int",   "step": 1},
+    "LOOP_START":         {"default": 3,     "min": 2,    "max": 5,    "type": "int",   "step": 1},
+    "LOOP_END":           {"default": 5,     "min": 4,    "max": 7,    "type": "int",   "step": 1},
+    "PARALLEL_RESIDUAL_START": {"default": 7, "min": 5,   "max": 9,    "type": "int",   "step": 1},
+    "EMBED_BITS":             {"default": 8,     "min": 6,    "max": 8,    "type": "int",   "step": 1},
+    "MATRIX_CLIP_SIGMAS":     {"default": 12.85, "min": 8.0,  "max": 18.0, "type": "float", "step": 1.0},
 }
 
 # Dimensions that shouldn't be combined (they interact too strongly)
 COMBINATION_CONFLICTS = [
     {"MUON_MOMENTUM", "MUON_BACKEND_STEPS"},
     {"MATRIX_LR", "SCALAR_LR"},
+    {"LOOP_START", "LOOP_END", "NUM_LOOPS"},  # depth recurrence params interact
+    {"MUON_WD", "EMBED_WD"},  # weight decay params interact
 ]
 
 _shutdown_requested = False
@@ -286,7 +298,7 @@ def _generate_interpolation(analysis: dict, existing: set[str]) -> list[dict]:
                         "origin": "interpolation",
                         "hypothesis": f"Bisect {dim_name} between {tested[best_idx]} and {tested[neighbor_idx]}",
                         "env": {dim_name: val_str},
-                        "script": "experiment1.py",
+                        "script": "winning_base_decoded.py",
                         "seeds": [1337, 42],
                         "priority": 80,
                         "status": "pending",
@@ -321,7 +333,7 @@ def _generate_combinations(analysis: dict, batch_state: dict, existing: set[str]
                     "origin": "combination",
                     "hypothesis": f"Combine best {dim_a}={val_a} with best {dim_b}={val_b}",
                     "env": {dim_a: val_a, dim_b: val_b},
-                    "script": "experiment1.py",
+                    "script": "winning_base_decoded.py",
                     "seeds": [1337, 42, 7],
                     "priority": 70,
                     "status": "pending",
@@ -368,7 +380,7 @@ def _generate_perturbations(analysis: dict, batch_state: dict, existing: set[str
                     "origin": "perturbation",
                     "hypothesis": f"Perturb {dim_name} {direction} from {current} to {new_val}",
                     "env": env,
-                    "script": "experiment1.py",
+                    "script": "winning_base_decoded.py",
                     "seeds": [1337],
                     "priority": 50,
                     "status": "pending",
@@ -449,7 +461,7 @@ def select_next_experiments(
             config = StrategyConfig(
                 name=gen["name"],
                 tier=0,
-                script=gen.get("script", "experiment1.py"),
+                script=gen.get("script", "winning_base_decoded.py"),
                 env=gen.get("env", {}),
                 seeds=gen.get("seeds", [1337]),
                 description=gen.get("hypothesis", "auto-generated"),

@@ -1,0 +1,8 @@
+{
+  "experiment_id": "exp_0010",
+  "task_id": "train_bpb",
+  "status": "passed",
+  "score": 2.5374,
+  "ended_at": "2026-04-14T03:33:14+00:00",
+  "summary": "BPB=2.537400"
+}

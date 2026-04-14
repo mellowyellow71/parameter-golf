@@ -1,0 +1,9 @@
+{
+  "experiment_id": "exp_0005",
+  "task_id": "train_bpb",
+  "status": "failed",
+  "score": 99.0,
+  "ended_at": "2026-04-14T03:22:33+00:00",
+  "summary": "failed",
+  "failure_reason": "training_failed"
+}

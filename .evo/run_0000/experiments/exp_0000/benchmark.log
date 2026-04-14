@@ -1,0 +1,25 @@
+
+--- Trying SPOT across 19 zones ---
+  Creating SPOT instance pgolf-exp-evo-exp-0000-20260413-024824 in us-central1-a...
+
+  Instance created: pgolf-exp-evo-exp-0000-20260413-024824
+  Zone: us-central1-a
+  External IP: 34.70.248.17
+  Model: SPOT
+  Waiting for SSH on pgolf-exp-evo-exp-0000-20260413-024824 (us-central1-a)...
+  SSH ready after 45s (3 attempts)
+  Only 9 training shards found. Downloading full dataset...
+  Data download failed: Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+
+Recommendation: To check for possible causes of SSH connectiv
+  Proceeding with 9 train + 1 val shards
+  Deleting instance pgolf-exp-evo-exp-0000-20260413-024824 in us-central1-a...
+  Deleted: pgolf-exp-evo-exp-0000-20260413-024824
+{
+  "score": 99.0,
+  "tasks": {
+    "train_bpb": 99.0
+  },
+  "started_at": "2026-04-13T09:48:24+00:00",
+  "ended_at": "2026-04-13T09:55:24+00:00"
+}

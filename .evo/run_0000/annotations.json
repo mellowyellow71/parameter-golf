@@ -1,0 +1,28 @@
+{
+  "annotations": [
+    {
+      "analysis": "QK_GAIN_INIT=4.0 + XSA_LAST_N=11: BPB improved 1.1536->1.1527 (-0.0009). XSA-all adds ~6ms/step overhead (116ms vs 110ms). Artifact 15.86MB, under limit.",
+      "experiment_id": "exp_0004",
+      "task_id": null,
+      "timestamp": "2026-04-13T22:48:55+00:00"
+    },
+    {
+      "analysis": "WD=0.06+warmdown=4000: BPB=1.1559 vs baseline 1.1536 (+0.0023 regression). Higher WD over-regularizes with limited training data (9 shards). Smaller artifact (14.4MB vs 15.9MB). Direction: WD increase is harmful at this data scale.",
+      "experiment_id": "exp_0005",
+      "task_id": null,
+      "timestamp": "2026-04-13T23:06:45+00:00"
+    },
+    {
+      "analysis": "QK-Gain=5.0+XSA-11: BPB=1.1535 vs 1.1527 (4.0). Gain=5.0 is slightly worse than 4.0. Concave peak confirmed: optimal QK-Gain is around 4.0, not higher.",
+      "experiment_id": "exp_0007",
+      "task_id": null,
+      "timestamp": "2026-04-13T23:27:22+00:00"
+    },
+    {
+      "analysis": "MLP 3.5x+QK4.0+XSA11: PREEMPTED at step 3500 but showed train_loss=1.954 (vs 1.970 baseline). Pre-GPTQ BPB likely ~1.1485. VERY PROMISING - retry as exp_0009.",
+      "experiment_id": "exp_0008",
+      "task_id": null,
+      "timestamp": "2026-04-13T23:51:01+00:00"
+    }
+  ]
+}

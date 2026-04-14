@@ -172,6 +172,10 @@ def create_bpb_bar_chart(df: pd.DataFrame) -> go.Figure:
 
 
 def create_bpb_progression(df: pd.DataFrame) -> go.Figure:
+    if "End" not in df.columns or df.empty:
+        fig = go.Figure()
+        fig.add_annotation(text="No completed experiments yet", showarrow=False, font_size=20)
+        return fig
     succeeded = df[(df["Status"] == "succeeded") & df["End"].notna() & (df["End"] != "")].copy()
     if succeeded.empty:
         fig = go.Figure()
@@ -201,6 +205,10 @@ def create_bpb_progression(df: pd.DataFrame) -> go.Figure:
 
 
 def create_timeline(df: pd.DataFrame) -> go.Figure:
+    if "Start" not in df.columns or "End" not in df.columns or df.empty:
+        fig = go.Figure()
+        fig.add_annotation(text="No experiment timeline data yet", showarrow=False, font_size=20)
+        return fig
     has_times = df[df["Start"].notna() & (df["Start"] != "") & df["End"].notna() & (df["End"] != "")].copy()
     if has_times.empty:
         fig = go.Figure()

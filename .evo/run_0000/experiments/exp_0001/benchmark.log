@@ -1,0 +1,96 @@
+
+--- Trying SPOT across 19 zones ---
+  Creating SPOT instance pgolf-exp-evo-exp-0001-20260413-123527 in us-central1-a...
+    Capacity unavailable in us-central1-a: ERROR: (gcloud.compute.instances.create) Could not fetch resource:
+---
+code: ZONE_RESOURCE_POOL_EXHAUSTED_WITH_DETAILS
+e
+  Creating SPOT instance pgolf-exp-evo-exp-0001-20260413-123535 in us-central1-b...
+    Capacity unavailable in us-central1-b: ERROR: (gcloud.compute.instances.create) Could not fetch resource:
+---
+code: ZONE_RESOURCE_POOL_EXHAUSTED_WITH_DETAILS
+e
+  Creating SPOT instance pgolf-exp-evo-exp-0001-20260413-123640 in us-central1-c...
+    Capacity unavailable in us-central1-c: ERROR: (gcloud.compute.instances.create) Could not fetch resource:
+---
+code: ZONE_RESOURCE_POOL_EXHAUSTED_WITH_DETAILS
+e
+  Creating SPOT instance pgolf-exp-evo-exp-0001-20260413-123648 in us-west1-a...
+    Capacity unavailable in us-west1-a: ERROR: (gcloud.compute.instances.create) Could not fetch resource:
+---
+code: ZONE_RESOURCE_POOL_EXHAUSTED_WITH_DETAILS
+e
+  Creating SPOT instance pgolf-exp-evo-exp-0001-20260413-123655 in us-west1-b...
+    Capacity unavailable in us-west1-b: ERROR: (gcloud.compute.instances.create) Could not fetch resource:
+---
+code: ZONE_RESOURCE_POOL_EXHAUSTED_WITH_DETAILS
+e
+  Creating SPOT instance pgolf-exp-evo-exp-0001-20260413-123703 in us-east4-a...
+    Capacity unavailable in us-east4-a: ERROR: (gcloud.compute.instances.create) Could not fetch resource:
+---
+code: ZONE_RESOURCE_POOL_EXHAUSTED_WITH_DETAILS
+e
+  Creating SPOT instance pgolf-exp-evo-exp-0001-20260413-123753 in us-east4-b...
+    Capacity unavailable in us-east4-b: ERROR: (gcloud.compute.instances.create) Could not fetch resource:
+---
+code: ZONE_RESOURCE_POOL_EXHAUSTED_WITH_DETAILS
+e
+  Creating SPOT instance pgolf-exp-evo-exp-0001-20260413-123801 in us-east4-c...
+    Capacity unavailable in us-east4-c: ERROR: (gcloud.compute.instances.create) Could not fetch resource:
+---
+code: ZONE_RESOURCE_POOL_EXHAUSTED_WITH_DETAILS
+e
+  Creating SPOT instance pgolf-exp-evo-exp-0001-20260413-123808 in europe-west1-b...
+    Capacity unavailable in europe-west1-b: ERROR: (gcloud.compute.instances.create) Could not fetch resource:
+---
+code: ZONE_RESOURCE_POOL_EXHAUSTED_WITH_DETAILS
+e
+  Creating SPOT instance pgolf-exp-evo-exp-0001-20260413-123818 in europe-west1-c...
+    Capacity unavailable in europe-west1-c: ERROR: (gcloud.compute.instances.create) Could not fetch resource:
+---
+code: ZONE_RESOURCE_POOL_EXHAUSTED_WITH_DETAILS
+e
+  Creating SPOT instance pgolf-exp-evo-exp-0001-20260413-124248 in europe-west3-c...
+    Capacity unavailable in europe-west3-c: ERROR: (gcloud.compute.instances.create) Could not fetch resource:
+---
+code: ZONE_RESOURCE_POOL_EXHAUSTED_WITH_DETAILS
+e
+  Creating SPOT instance pgolf-exp-evo-exp-0001-20260413-124448 in europe-west4-b...
+    Capacity unavailable in europe-west4-b: ERROR: (gcloud.compute.instances.create) Could not fetch resource:
+---
+code: ZONE_RESOURCE_POOL_EXHAUSTED_WITH_DETAILS
+e
+  Creating SPOT instance pgolf-exp-evo-exp-0001-20260413-124501 in europe-west4-c...
+    Capacity unavailable in europe-west4-c: ERROR: (gcloud.compute.instances.create) Could not fetch resource:
+---
+code: ZONE_RESOURCE_POOL_EXHAUSTED_WITH_DETAILS
+e
+  Creating SPOT instance pgolf-exp-evo-exp-0001-20260413-124509 in asia-east1-c...
+    Capacity unavailable in asia-east1-c: ERROR: (gcloud.compute.instances.create) Could not fetch resource:
+---
+code: ZONE_RESOURCE_POOL_EXHAUSTED_WITH_DETAILS
+e
+  Creating SPOT instance pgolf-exp-evo-exp-0001-20260413-124657 in asia-northeast1-b...
+    Capacity unavailable in asia-northeast1-b: ERROR: (gcloud.compute.instances.create) Could not fetch resource:
+---
+code: ZONE_RESOURCE_POOL_EXHAUSTED_WITH_DETAILS
+e
+  Creating SPOT instance pgolf-exp-evo-exp-0001-20260413-124716 in asia-southeast1-b...
+
+  Instance created: pgolf-exp-evo-exp-0001-20260413-124716
+  Zone: asia-southeast1-b
+  External IP: 34.177.110.147
+  Model: SPOT
+  Waiting for SSH on pgolf-exp-evo-exp-0001-20260413-124716 (asia-southeast1-b)...
+  SSH ready after 50s (3 attempts)
+  Deleting instance pgolf-exp-evo-exp-0001-20260413-124716 in asia-southeast1-b...
+  Delete failed: ERROR: (gcloud.compute.instances.delete) Could not fetch resource:
+ - The resource 'projects/bryan-usage-0/zones/asia-southeast1-b/instances/pgolf-exp-evo-exp-0001-20260413-124716' was not found
+{
+  "score": 99.0,
+  "tasks": {
+    "train_bpb": 99.0
+  },
+  "started_at": "2026-04-13T19:35:27+00:00",
+  "ended_at": "2026-04-13T19:53:06+00:00"
+}

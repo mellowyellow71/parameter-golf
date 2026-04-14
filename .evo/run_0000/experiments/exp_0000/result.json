@@ -1,0 +1,8 @@
+{
+  "eval_epoch": 1,
+  "experiment_id": "exp_0000",
+  "reason": "HF data download hung, fixed ensure_data",
+  "score": 99.0,
+  "status": "discarded",
+  "timestamp": "2026-04-13T09:56:57+00:00"
+}

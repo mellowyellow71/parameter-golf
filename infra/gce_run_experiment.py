@@ -156,7 +156,40 @@ def ensure_data(instance: InstanceInfo, config: dict) -> bool:
         print(f"  Training data ready: {train_count} train + {val_count} val shards")
         return True
 
-    # Only download if we have nothing
+    # If we have train shards but are missing tokenizer, try to grab it from GCS (fast)
+    if train_count >= 1 and not has_tokenizer:
+        print(f"  Have {train_count} train shards, fetching tokenizer from GCS...")
+        data_bucket = config.get("data_bucket", "parameter-golf-data")
+        tok_dir = f"{repo_dir}/data/tokenizers"
+        tok_gcs = f"gs://{data_bucket}/tokenizers/fineweb_1024_bpe.model"
+        r = ssh_exec(instance, config,
+            f"mkdir -p {tok_dir} && gsutil cp {tok_gcs} {tok_dir}/fineweb_1024_bpe.model",
+            timeout=60)
+        if r.returncode == 0:
+            print("  Tokenizer fetched from GCS. Proceeding (val shards optional for smoke).")
+            return True
+        print(f"  GCS tokenizer fetch failed: {r.stderr[:200]}. Trying HuggingFace...")
+
+    if train_count >= 1:
+        # Have train data, try quick tokenizer + val download
+        data_bucket = config.get("data_bucket", "parameter-golf-data")
+        tok_dir = f"{repo_dir}/data/tokenizers"
+        val_dir = f"{repo_dir}/data/datasets/fineweb10B_sp1024"
+        # Try to get val shard + tokenizer from GCS
+        r = ssh_exec(instance, config,
+            f"mkdir -p {tok_dir} {val_dir} && "
+            f"gsutil cp gs://{data_bucket}/tokenizers/fineweb_1024_bpe.model {tok_dir}/ 2>/dev/null; "
+            f"gsutil cp 'gs://{data_bucket}/datasets/fineweb10B_sp1024/fineweb_val_000000001.bin' {val_dir}/ 2>/dev/null; "
+            f"ls {tok_dir}/fineweb_1024_bpe.model",
+            timeout=90)
+        if r.returncode == 0:
+            print("  Got tokenizer from GCS. Proceeding.")
+            return True
+        print(f"  Could not get tokenizer from GCS. Training may fail without tokenizer.")
+        # Return True anyway — let training fail gracefully rather than blocking here
+        return True
+
+    # Only download if we have no data at all
     print(f"  Missing data (train={train_count}, val={val_count}, tok={has_tokenizer}). Downloading minimal set...")
     result = ssh_exec(instance, config,
         f"python3 {repo_dir}/data/cached_challenge_fineweb.py --variant sp1024 --train-shards 1",

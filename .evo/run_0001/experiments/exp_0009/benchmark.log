@@ -1,0 +1,41 @@
+
+============================================================
+  SMOKE TEST: evo-exp_0009
+  Machine: a3-highgpu-1g (1xH100)
+  Wallclock: 300s
+  Script: winning_base_decoded.py
+============================================================
+
+--- Trying SPOT across 19 zones ---
+  Creating SPOT instance pgolf-exp-smoke-evo-exp-0009-20260413-202415 in us-central1-a...
+    Capacity unavailable in us-central1-a: ERROR: (gcloud.compute.instances.create) Could not fetch resource:
+---
+code: ZONE_RESOURCE_POOL_EXHAUSTED_WITH_DETAILS
+e
+  Creating SPOT instance pgolf-exp-smoke-evo-exp-0009-20260413-202423 in us-central1-b...
+    Capacity unavailable in us-central1-b: ERROR: (gcloud.compute.instances.create) Could not fetch resource:
+---
+code: ZONE_RESOURCE_POOL_EXHAUSTED_WITH_DETAILS
+e
+  Creating SPOT instance pgolf-exp-smoke-evo-exp-0009-20260413-202432 in us-central1-c...
+
+  Instance created: pgolf-exp-smoke-evo-exp-0009-20260413-202432
+  Zone: us-central1-c
+  External IP: 136.112.199.250
+  Model: SPOT
+  Waiting for SSH on pgolf-exp-smoke-evo-exp-0009-20260413-202432 (us-central1-c)...
+  SSH ready after 24s (2 attempts)
+  Syncing 4 files to /home/ray/parameter-golf/...
+  Code sync complete
+  Missing data (train=9, val=0, tok=False). Downloading minimal set...
+  Data download failed. Cannot proceed.
+  Deleting instance pgolf-exp-smoke-evo-exp-0009-20260413-202432 in us-central1-c...
+  Deleted: pgolf-exp-smoke-evo-exp-0009-20260413-202432
+{
+  "score": 99.0,
+  "tasks": {
+    "train_bpb": 99.0
+  },
+  "started_at": "2026-04-14T03:24:15+00:00",
+  "ended_at": "2026-04-14T03:28:51+00:00"
+}

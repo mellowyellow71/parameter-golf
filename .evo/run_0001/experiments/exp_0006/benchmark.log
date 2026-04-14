@@ -1,0 +1,44 @@
+
+============================================================
+  SMOKE TEST: evo-exp_0006
+  Machine: a3-highgpu-1g (1xH100)
+  Wallclock: 300s
+  Script: winning_base_decoded.py
+============================================================
+
+--- Trying SPOT across 19 zones ---
+  Creating SPOT instance pgolf-exp-smoke-evo-exp-0006-20260413-200955 in us-central1-a...
+    Capacity unavailable in us-central1-a: ERROR: (gcloud.compute.instances.create) Could not fetch resource:
+---
+code: ZONE_RESOURCE_POOL_EXHAUSTED_WITH_DETAILS
+e
+  Creating SPOT instance pgolf-exp-smoke-evo-exp-0006-20260413-201003 in us-central1-b...
+
+  Instance created: pgolf-exp-smoke-evo-exp-0006-20260413-201003
+  Zone: us-central1-b
+  External IP: 136.112.199.250
+  Model: SPOT
+  Waiting for SSH on pgolf-exp-smoke-evo-exp-0006-20260413-201003 (us-central1-b)...
+  SSH ready after 24s (2 attempts)
+  Syncing 4 files to /home/ray/parameter-golf/...
+  Code sync complete
+  Missing data (train=9, val=1, tok=False). Downloading minimal set...
+  Minimal data download complete
+  Starting training: torchrun --nproc_per_node=1 winning_base_decoded.py
+  Training started in tmux session 'training'
+  [ 223s] Step 5 train_loss=6.5156
+  [ 264s] Step 50 train_loss=4.1789
+  [ 305s] Step 100 train_loss=3.2788
+  [ 347s] Step 150 train_loss=2.7736
+  [ 426s] Step 200 train_loss=2.5413
+  [ 426s] Timeout exceeded, killing training
+  Deleting instance pgolf-exp-smoke-evo-exp-0006-20260413-201003 in us-central1-b...
+  Deleted: pgolf-exp-smoke-evo-exp-0006-20260413-201003
+{
+  "score": 99.0,
+  "tasks": {
+    "train_bpb": 99.0
+  },
+  "started_at": "2026-04-14T03:09:55+00:00",
+  "ended_at": "2026-04-14T03:19:38+00:00"
+}
