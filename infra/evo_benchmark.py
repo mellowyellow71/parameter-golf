@@ -97,20 +97,26 @@ def run_benchmark(target_path: str) -> float:
     env = {"VOCAB_SIZE": "1024", "COMPRESSOR": "lzma"}
 
     try:
-        # Stage 1: Smoke test on 1xH100 (cheap, fast, ~$0.25)
-        eprint(f"[evo] Stage 1: Smoke test on 1xH100...")
-        smoke = run_smoke(exp_name, target_name, env, config)
+        # Go straight to qualify (8xH100, 3min) — smoke can't discriminate
+        eprint(f"[evo] Running qualify on 8xH100 (3min, step-1000 BPB)...")
+        _real_stdout = sys.stdout
+        sys.stdout = sys.stderr
+        try:
+            qualify = run_qualify(exp_name, target_name, env, config)
+        finally:
+            sys.stdout = _real_stdout
 
-        if smoke.status != "pass":
-            eprint(f"[evo] SMOKE FAIL: {smoke.error or 'unknown'}")
+        if qualify.status != "pass":
+            eprint(f"[evo] QUALIFY FAIL: {qualify.error or 'unknown'}")
             return 99.0
 
-        eprint(f"[evo] Smoke passed: train_loss={smoke.train_loss_last} at step {smoke.last_step}")
-
-        # Return smoke train_loss as score (matches baseline scoring: train_loss@step200)
-        score = smoke.train_loss_last if smoke.train_loss_last is not None else 99.0
-        eprint(f"[evo] Score (train_loss): {score}")
-        return score
+        # Report BPB (the real metric), not train_loss
+        bpb = qualify.step_1000_bpb
+        if bpb is None:
+            # Fallback: use val_loss converted estimate
+            bpb = qualify.val_loss_1000 / 1.6309 if qualify.val_loss_1000 else 99.0
+        eprint(f"[evo] Qualify BPB: {bpb:.6f} at step {qualify.last_step}")
+        return bpb
 
     except Exception as e:
         eprint(f"[evo] Exception: {e}")
