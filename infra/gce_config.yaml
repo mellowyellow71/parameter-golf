@@ -9,6 +9,7 @@ gce:
   boot_disk_size_gb: 200
   boot_disk_type: "pd-ssd"
   machine_type: "a3-highgpu-8g"
+  smoketest_machine_type: "a3-highgpu-1g"   # 1xH100 for cheap smoke tests
   scopes:
     - "https://www.googleapis.com/auth/cloud-platform"
   network: "default"
@@ -44,11 +45,17 @@ gce:
   ssh_user: "ray"
   ssh_timeout_seconds: 300
 
-  # Experiment defaults
+  # Experiment defaults (full run)
   max_wallclock_seconds: 660        # 11 min (10 min train + 1 min buffer)
   early_kill_step: 1000             # Check BPB at this step
   early_kill_threshold_pct: 5       # Kill if >5% worse than best at step 1000
   poll_interval_seconds: 30
+
+  # Smoke test settings (1xH100)
+  smoketest_wallclock_seconds: 300  # 5 min on 1xH100 → ~340 steps
+  smoketest_poll_seconds: 15
+  # Quick qualify (8xH100, short run)
+  qualify_wallclock_seconds: 180    # 3 min on 8xH100 → ~1500 steps
 
   # Instance naming
   instance_prefix: "pgolf-exp"
