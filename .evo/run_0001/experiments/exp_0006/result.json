@@ -1,0 +1,8 @@
+{
+  "error": "Could not parse benchmark score from output",
+  "eval_epoch": 1,
+  "experiment_id": "exp_0006",
+  "score": 99.0,
+  "status": "failed",
+  "timestamp": "2026-04-14T03:19:38+00:00"
+}

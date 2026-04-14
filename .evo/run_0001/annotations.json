@@ -1,0 +1,28 @@
+{
+  "annotations": [
+    {
+      "analysis": "Winning SP8192 base smoke test on 1xH100: train_loss=2.54@step200 in 300s. Architecture: 11L 512d, depth recurrence (layers 3-5 loop 2x, activated at 35%), parallel residuals (layer 7+), skip gates, QK-Gain=5.0, MLP 4x, MuonEq-R, WD=0.095, LeakyReLU^2, partial RoPE 16/64. Flash attention fallback to PyTorch SDPA works. VOCAB_SIZE=1024 for smoke (SP8192 data not on golden image).",
+      "experiment_id": "exp_0000",
+      "task_id": null,
+      "timestamp": "2026-04-14T01:13:43+00:00"
+    },
+    {
+      "analysis": "Infrastructure fix: evo_benchmark.py had extra_files kwarg not supported by run_smoke/run_qualify. Fixed by copying target to repo root instead. All 4 child experiments (exp_0001-0004) failed with score=99.0 due to this bug.",
+      "experiment_id": "exp_0000",
+      "task_id": null,
+      "timestamp": "2026-04-14T03:10:12+00:00"
+    },
+    {
+      "analysis": "QK_GAIN_INIT=5.25 confirmed improvement: score 2.538 vs baseline 2.5399 (-0.0019). Sharper attention initialization from competition leader default yields consistent improvement. Ready to try ENABLE_LOOPING_AT=0.25 (earlier depth recurrence) on top of this.",
+      "experiment_id": "exp_0014",
+      "task_id": null,
+      "timestamp": "2026-04-14T03:51:49+00:00"
+    },
+    {
+      "analysis": "ENABLE_LOOPING_AT=0.25 regresses: 2.5444 vs parent exp_0014's 2.538. Earlier looping (25% vs 35%) hurts at smoke-test scale. The depth recurrence benefits from starting later in training when representations are more mature. ENABLE_LOOPING_AT=0.35 is better.",
+      "experiment_id": "exp_0016",
+      "task_id": null,
+      "timestamp": "2026-04-14T04:14:57+00:00"
+    }
+  ]
+}

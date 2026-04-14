@@ -1,0 +1,321 @@
+{
+  "experiments": {
+    "winning-base-smoke": {
+      "smoke": {
+        "status": "fail",
+        "train_loss_last": null,
+        "last_step": 0,
+        "loss_decreased": false,
+        "error": "Traceback (most recent call last)",
+        "timestamp": "2026-04-13T17:58:18.155439"
+      }
+    },
+    "winning-smoke-v2": {
+      "smoke": {
+        "status": "pass",
+        "train_loss_last": 2.5399,
+        "last_step": 200,
+        "loss_decreased": true,
+        "error": "",
+        "timestamp": "2026-04-13T18:12:41.918944"
+      }
+    },
+    "evo-exp_0006": {
+      "smoke": {
+        "status": "pass",
+        "train_loss_last": 2.5413,
+        "last_step": 200,
+        "loss_decreased": true,
+        "error": "",
+        "timestamp": "2026-04-13T20:19:18.397123"
+      }
+    },
+    "evo-exp_0005": {
+      "smoke": {
+        "status": "pass",
+        "train_loss_last": 2.5368,
+        "last_step": 200,
+        "loss_decreased": true,
+        "error": "",
+        "timestamp": "2026-04-13T20:22:11.317959"
+      }
+    },
+    "evo-exp_0007": {
+      "smoke": {
+        "status": "pass",
+        "train_loss_last": 2.5375,
+        "last_step": 200,
+        "loss_decreased": true,
+        "error": "",
+        "timestamp": "2026-04-13T20:22:13.660368"
+      }
+    },
+    "evo-exp_0008": {
+      "smoke": {
+        "status": "pass",
+        "train_loss_last": 2.5388,
+        "last_step": 200,
+        "loss_decreased": true,
+        "error": "",
+        "timestamp": "2026-04-13T20:22:19.944732"
+      }
+    },
+    "evo-exp_0009": {
+      "smoke": {
+        "status": "fail",
+        "error": "Training failed to start",
+        "timestamp": "2026-04-13T20:36:03.032218"
+      }
+    },
+    "evo-exp_0010": {
+      "smoke": {
+        "status": "pass",
+        "train_loss_last": 2.5374,
+        "last_step": 200,
+        "loss_decreased": true,
+        "error": "",
+        "timestamp": "2026-04-13T20:32:51.449173"
+      }
+    },
+    "evo-exp_0011": {
+      "smoke": {
+        "status": "error",
+        "error": "Command '['gcloud', 'compute', 'ssh', 'ray@pgolf-exp-smoke-evo-exp-0011-20260413-202515', '--zone', 'us-west1-a', '--project', 'bryan-usage-0', '--strict-host-key-checking=no', '--command', \"cat /tmp/training_output.log 2>/dev/null || echo ''\"]' timed out after 15 seconds",
+        "timestamp": "2026-04-13T20:34:04.485757"
+      }
+    },
+    "evo-exp_0012": {
+      "smoke": {
+        "status": "error",
+        "error": "Command '['gcloud', 'compute', 'ssh', 'ray@pgolf-exp-smoke-evo-exp-0012-20260413-202533', '--zone', 'us-west1-a', '--project', 'bryan-usage-0', '--strict-host-key-checking=no', '--command', 'tmux has-session -t training 2>/dev/null && echo running || echo stopped']' timed out after 15 seconds",
+        "timestamp": "2026-04-13T20:34:14.549379"
+      }
+    },
+    "win-qkgain-475": {
+      "smoke": {
+        "status": "pass",
+        "train_loss_last": 2.5399,
+        "last_step": 200,
+        "loss_decreased": true,
+        "error": "",
+        "timestamp": "2026-04-13T22:36:10.539598"
+      }
+    },
+    "evo-exp_0013": {
+      "smoke": {
+        "status": "error",
+        "error": "Command '['gcloud', 'compute', 'instances', 'create', 'pgolf-exp-smoke-evo-exp-0013-20260413-203607', '--project', 'bryan-usage-0', '--zone', 'us-central1-c', '--machine-type', 'a3-highgpu-1g', '--image', 'pgolf-golden-v2', '--image-project', 'bryan-usage-0', '--boot-disk-size', '200GB', '--boot-disk-type', 'pd-ssd', '--network-interface', 'network=default,nic-type=GVNIC', '--scopes', 'https://www.googleapis.com/auth/cloud-platform', '--maintenance-policy', 'TERMINATE', '--no-restart-on-failure', '--metadata', 'enable-osconfig=TRUE', '--provisioning-model', 'SPOT', '--instance-termination-action', 'STOP']' timed out after 300 seconds",
+        "timestamp": "2026-04-13T20:41:08.056440"
+      }
+    },
+    "win-qkgain-525": {
+      "smoke": {
+        "status": "pass",
+        "train_loss_last": 2.5386,
+        "last_step": 200,
+        "loss_decreased": true,
+        "error": "",
+        "timestamp": "2026-04-13T20:44:43.956395"
+      }
+    },
+    "win-qkgain-550": {
+      "smoke": {
+        "status": "pass",
+        "train_loss_last": 2.5408,
+        "last_step": 200,
+        "loss_decreased": true,
+        "error": "",
+        "timestamp": "2026-04-13T20:44:43.979779"
+      }
+    },
+    "win-parallel-5": {
+      "smoke": {
+        "status": "pass",
+        "train_loss_last": 2.5416,
+        "last_step": 200,
+        "loss_decreased": true,
+        "error": "",
+        "timestamp": "2026-04-13T20:50:00.091837"
+      }
+    },
+    "evo-exp_0014": {
+      "smoke": {
+        "status": "pass",
+        "train_loss_last": 2.538,
+        "last_step": 200,
+        "loss_decreased": true,
+        "error": "",
+        "timestamp": "2026-04-13T20:51:14.773750"
+      }
+    },
+    "win-loop-2-6": {
+      "smoke": {
+        "status": "pass",
+        "train_loss_last": 2.7604,
+        "last_step": 150,
+        "loss_decreased": true,
+        "error": "",
+        "timestamp": "2026-04-13T20:54:32.561008"
+      }
+    },
+    "win-3loops": {
+      "smoke": {
+        "status": "pass",
+        "train_loss_last": 2.7756,
+        "last_step": 150,
+        "loss_decreased": true,
+        "error": "",
+        "timestamp": "2026-04-13T20:54:34.504872"
+      }
+    },
+    "win-lr-025": {
+      "smoke": {
+        "status": "pass",
+        "train_loss_last": 2.5209,
+        "last_step": 200,
+        "loss_decreased": true,
+        "error": "",
+        "timestamp": "2026-04-13T20:59:37.608732"
+      }
+    },
+    "evo-exp_0015": {
+      "smoke": {
+        "status": "fail",
+        "train_loss_last": null,
+        "last_step": 0,
+        "loss_decreased": false,
+        "error": "No training steps completed",
+        "timestamp": "2026-04-13T21:04:19.905185"
+      }
+    },
+    "p0-stacked-quickwins": {
+      "qualify": {
+        "status": "fail",
+        "error": "Training failed to start",
+        "timestamp": "2026-04-13T21:04:57.677700"
+      }
+    },
+    "p0-adaptive-gptq": {
+      "qualify": {
+        "status": "pass",
+        "step_1000_bpb": 4.1093,
+        "val_loss_1000": 6.9384,
+        "last_step": 1000,
+        "error": "",
+        "timestamp": "2026-04-13T21:09:46.715932"
+      }
+    },
+    "evo-exp_0016": {
+      "smoke": {
+        "status": "pass",
+        "train_loss_last": 2.5444,
+        "last_step": 200,
+        "loss_decreased": true,
+        "error": "",
+        "timestamp": "2026-04-13T21:14:20.045609"
+      }
+    },
+    "p0-sqrt-cooldown": {
+      "qualify": {
+        "status": "pass",
+        "step_1000_bpb": 4.1093,
+        "val_loss_1000": 6.9384,
+        "last_step": 1000,
+        "error": "",
+        "timestamp": "2026-04-13T21:21:20.638374"
+      }
+    },
+    "p0-stacked-v2": {
+      "qualify": {
+        "status": "pass",
+        "step_1000_bpb": 4.1093,
+        "val_loss_1000": 6.9384,
+        "last_step": 1000,
+        "error": "",
+        "timestamp": "2026-04-13T21:24:16.506342"
+      }
+    },
+    "competition-stacked-v1": {
+      "full": {
+        "status": "done",
+        "final_bpb": 4.1093,
+        "artifact_size": 0,
+        "last_step": 4000,
+        "error": "",
+        "gcs_uri": "gs://bryan-usage-0-pgolf-experiments/experiments/full-competition-stacked-v1/20260413-215707",
+        "timestamp": "2026-04-13T21:57:23.653987"
+      }
+    },
+    "competition-stacked-v2": {
+      "full": {
+        "status": "done",
+        "final_bpb": 1.1243,
+        "artifact_size": 128091001,
+        "last_step": 4000,
+        "error": "",
+        "gcs_uri": "gs://bryan-usage-0-pgolf-experiments/experiments/full-competition-stacked-v2/20260413-221831",
+        "timestamp": "2026-04-13T22:18:59.087128"
+      }
+    },
+    "p0-batch-warmup": {
+      "qualify": {
+        "status": "pass",
+        "step_1000_bpb": 4.1093,
+        "val_loss_1000": 6.9384,
+        "last_step": 900,
+        "error": "",
+        "timestamp": "2026-04-13T22:34:22.081253"
+      }
+    },
+    "p0-cosine-cooldown": {
+      "qualify": {
+        "status": "pass",
+        "step_1000_bpb": 4.1093,
+        "val_loss_1000": 6.9384,
+        "last_step": 1000,
+        "error": "",
+        "timestamp": "2026-04-13T22:34:47.260237"
+      }
+    },
+    "p0-int7-embeds": {
+      "qualify": {
+        "status": "pass",
+        "step_1000_bpb": 4.1093,
+        "val_loss_1000": 6.9384,
+        "last_step": 1000,
+        "error": "",
+        "timestamp": "2026-04-13T22:35:07.761532"
+      }
+    },
+    "p1-cosine-cooldown": {
+      "smoke": {
+        "status": "pass",
+        "train_loss_last": 2.5429,
+        "last_step": 200,
+        "loss_decreased": true,
+        "error": "",
+        "timestamp": "2026-04-13T22:36:11.626308"
+      }
+    },
+    "p1-sqrt-cooldown": {
+      "smoke": {
+        "status": "pass",
+        "train_loss_last": 2.5425,
+        "last_step": 200,
+        "loss_decreased": true,
+        "error": "",
+        "timestamp": "2026-04-13T22:36:12.447065"
+      }
+    },
+    "win-wd-010": {
+      "smoke": {
+        "status": "pass",
+        "train_loss_last": 2.5416,
+        "last_step": 200,
+        "loss_decreased": true,
+        "error": "",
+        "timestamp": "2026-04-13T22:36:24.790451"
+      }
+    }
+  }
+}

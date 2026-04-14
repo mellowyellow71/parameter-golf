@@ -1,0 +1,128 @@
+{
+  "results": {
+    "win-qkgain-475": {
+      "name": "win-qkgain-475",
+      "status": "pass",
+      "train_loss": 2.5399,
+      "last_step": 200,
+      "loss_decreased": true,
+      "error": "",
+      "script": "winning_base_decoded.py",
+      "env": {
+        "QK_GAIN_INIT": "4.75"
+      },
+      "description": "QK-Gain 4.75 (between 4.0 and 5.0)",
+      "tier": 1,
+      "timestamp": "2026-04-13T22:36:33.185036"
+    },
+    "win-qkgain-550": {
+      "name": "win-qkgain-550",
+      "status": "pass",
+      "train_loss": 2.5408,
+      "last_step": 200,
+      "loss_decreased": true,
+      "error": "",
+      "script": "winning_base_decoded.py",
+      "env": {
+        "QK_GAIN_INIT": "5.5"
+      },
+      "description": "QK-Gain 5.5 (push further)",
+      "tier": 1,
+      "timestamp": "2026-04-13T20:45:06.509699"
+    },
+    "win-qkgain-525": {
+      "name": "win-qkgain-525",
+      "status": "pass",
+      "train_loss": 2.5386,
+      "last_step": 200,
+      "loss_decreased": true,
+      "error": "",
+      "script": "winning_base_decoded.py",
+      "env": {
+        "QK_GAIN_INIT": "5.25"
+      },
+      "description": "QK-Gain 5.25 (latest competition record)",
+      "tier": 1,
+      "timestamp": "2026-04-13T20:45:14.604000"
+    },
+    "win-parallel-5": {
+      "name": "win-parallel-5",
+      "status": "pass",
+      "train_loss": 2.5416,
+      "last_step": 200,
+      "loss_decreased": true,
+      "error": "",
+      "script": "winning_base_decoded.py",
+      "env": {
+        "PARALLEL_RESIDUAL_START": "5"
+      },
+      "description": "Earlier parallel residuals (layer 5)",
+      "tier": 1,
+      "timestamp": "2026-04-13T20:50:27.363212"
+    },
+    "win-loop-2-6": {
+      "name": "win-loop-2-6",
+      "status": "pass",
+      "train_loss": 2.7604,
+      "last_step": 150,
+      "loss_decreased": true,
+      "error": "",
+      "script": "winning_base_decoded.py",
+      "env": {
+        "LOOP_START": "2",
+        "LOOP_END": "6"
+      },
+      "description": "Wider recurrence (layers 2-6 instead of 3-5)",
+      "tier": 1,
+      "timestamp": "2026-04-13T20:54:55.031765"
+    },
+    "win-3loops": {
+      "name": "win-3loops",
+      "status": "pass",
+      "train_loss": 2.7756,
+      "last_step": 150,
+      "loss_decreased": true,
+      "error": "",
+      "script": "winning_base_decoded.py",
+      "env": {
+        "NUM_LOOPS": "3"
+      },
+      "description": "3x depth recurrence (more virtual layers)",
+      "tier": 1,
+      "timestamp": "2026-04-13T20:55:07.278288"
+    },
+    "win-lr-025": {
+      "name": "win-lr-025",
+      "status": "pass",
+      "train_loss": 2.5209,
+      "last_step": 200,
+      "loss_decreased": true,
+      "error": "",
+      "script": "winning_base_decoded.py",
+      "env": {
+        "MATRIX_LR": "0.025",
+        "SCALAR_LR": "0.023"
+      },
+      "description": "Higher LR (compensate for SDPA fallback)",
+      "tier": 1,
+      "timestamp": "2026-04-13T20:59:57.963266"
+    },
+    "win-wd-010": {
+      "name": "win-wd-010",
+      "status": "pass",
+      "train_loss": 2.5416,
+      "last_step": 200,
+      "loss_decreased": true,
+      "error": "",
+      "script": "winning_base_decoded.py",
+      "env": {
+        "MUON_WD": "0.10",
+        "EMBED_WD": "0.09"
+      },
+      "description": "Higher weight decay",
+      "tier": 1,
+      "timestamp": "2026-04-13T22:36:47.542983"
+    }
+  },
+  "last_updated": "2026-04-13T22:36:47.543087"
+}

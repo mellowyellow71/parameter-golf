@@ -1,0 +1,12 @@
+{
+  "benchmark": "python3 infra/evo_benchmark.py --target {target}",
+  "comparison_blocked": false,
+  "current_eval_epoch": 1,
+  "gate": null,
+  "initialized_at": "2026-04-13T09:47:09+00:00",
+  "metric": "min",
+  "repo_root": "/home/ray/parameter-golf",
+  "target": "experiment1.py",
+  "workspace_dir": ".evo",
+  "worktrees_dir": "worktrees"
+}

@@ -1,0 +1,4 @@
+[evo] Copied target to winning_base_decoded.py
+[evo] Stage 1: Smoke test on 1xH100...
+[evo] Smoke passed: train_loss=2.5374 at step 200
+[evo] Score (train_loss): 2.5374

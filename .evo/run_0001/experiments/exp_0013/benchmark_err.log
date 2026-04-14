@@ -1,0 +1,24 @@
+[evo] Copied target to winning_base_decoded.py
+[evo] Stage 1: Smoke test on 1xH100...
+
+============================================================
+  SMOKE TEST: evo-exp_0013
+  Machine: a3-highgpu-1g (1xH100)
+  Wallclock: 300s
+  Script: winning_base_decoded.py
+============================================================
+
+--- Trying SPOT across 19 zones ---
+  Creating SPOT instance pgolf-exp-smoke-evo-exp-0013-20260413-203549 in us-central1-a...
+    Capacity unavailable in us-central1-a: ERROR: (gcloud.compute.instances.create) Could not fetch resource:
+---
+code: ZONE_RESOURCE_POOL_EXHAUSTED_WITH_DETAILS
+e
+  Creating SPOT instance pgolf-exp-smoke-evo-exp-0013-20260413-203558 in us-central1-b...
+    Capacity unavailable in us-central1-b: ERROR: (gcloud.compute.instances.create) Could not fetch resource:
+---
+code: ZONE_RESOURCE_POOL_EXHAUSTED_WITH_DETAILS
+e
+  Creating SPOT instance pgolf-exp-smoke-evo-exp-0013-20260413-203607 in us-central1-c...
+  Unexpected error: Command '['gcloud', 'compute', 'instances', 'create', 'pgolf-exp-smoke-evo-exp-0013-20260413-203607', '--project', 'bryan-usage-0', '--zone', 'us-central1-c', '--machine-type', 'a3-highgpu-1g', '--image', 'pgolf-golden-v2', '--image-project', 'bryan-usage-0', '--boot-disk-size', '200GB', '--boot-disk-type', 'pd-ssd', '--network-interface', 'network=default,nic-type=GVNIC', '--scopes', 'https://www.googleapis.com/auth/cloud-platform', '--maintenance-policy', 'TERMINATE', '--no-restart-on-failure', '--metadata', 'enable-osconfig=TRUE', '--provisioning-model', 'SPOT', '--instance-termination-action', 'STOP']' timed out after 300 seconds
+[evo] SMOKE FAIL: Command '['gcloud', 'compute', 'instances', 'create', 'pgolf-exp-smoke-evo-exp-0013-20260413-203607', '--project', 'bryan-usage-0', '--zone', 'us-central1-c', '--machine-type', 'a3-highgpu-1g', '--image', 'pgolf-golden-v2', '--image-project', 'bryan-usage-0', '--boot-disk-size', '200GB', '--boot-disk-type', 'pd-ssd', '--network-interface', 'network=default,nic-type=GVNIC', '--scopes', 'https://www.googleapis.com/auth/cloud-platform', '--maintenance-policy', 'TERMINATE', '--no-restart-on-failure', '--metadata', 'enable-osconfig=TRUE', '--provisioning-model', 'SPOT', '--instance-termination-action', 'STOP']' timed out after 300 seconds

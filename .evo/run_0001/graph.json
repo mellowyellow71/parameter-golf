@@ -1,0 +1,544 @@
+{
+  "next_id": 22,
+  "nodes": {
+    "exp_0000": {
+      "benchmark_result": null,
+      "branch": "evo/run_0001/exp_0000",
+      "children": [
+        "exp_0001",
+        "exp_0002",
+        "exp_0003",
+        "exp_0004",
+        "exp_0005",
+        "exp_0006",
+        "exp_0007",
+        "exp_0008",
+        "exp_0009",
+        "exp_0010",
+        "exp_0011",
+        "exp_0012",
+        "exp_0013",
+        "exp_0014",
+        "exp_0017",
+        "exp_0018"
+      ],
+      "commit": "1da813a7c4d59b2db68b5ab67a9d4be9d2394ade",
+      "created_at": "2026-04-14T01:13:27+00:00",
+      "eval_epoch": 1,
+      "gate_result": null,
+      "gates": [],
+      "hypothesis": "winning SP8192 base: depth recurrence + parallel residuals + QK5.25 (smoke verified, train_loss=2.54@step200)",
+      "id": "exp_0000",
+      "parent": "root",
+      "pruned_reason": null,
+      "score": 2.5399,
+      "status": "committed",
+      "updated_at": "2026-04-14T01:13:33+00:00",
+      "worktree": "/home/ray/parameter-golf/.evo/run_0001/worktrees/exp_0000"
+    },
+    "exp_0001": {
+      "benchmark_result": {
+        "ended_at": "2026-04-14T03:08:20+00:00",
+        "score": 99.0,
+        "started_at": "2026-04-14T03:08:20+00:00",
+        "tasks": {
+          "train_bpb": 99.0
+        }
+      },
+      "branch": "evo/run_0001/exp_0001",
+      "children": [],
+      "commit": "1da813a7c4d59b2db68b5ab67a9d4be9d2394ade",
+      "created_at": "2026-04-14T03:07:05+00:00",
+      "eval_epoch": 1,
+      "gate_failures": [],
+      "gate_result": true,
+      "gates": [],
+      "hypothesis": "PARALLEL_RESIDUAL_START=5: earlier parallel residuals for more attn/MLP specialization",
+      "id": "exp_0001",
+      "parent": "exp_0000",
+      "pruned_reason": null,
+      "score": 99.0,
+      "status": "discarded",
+      "updated_at": "2026-04-14T03:08:20+00:00",
+      "worktree": "/home/ray/parameter-golf/.evo/run_0001/worktrees/exp_0001"
+    },
+    "exp_0002": {
+      "benchmark_result": {
+        "ended_at": "2026-04-14T03:08:19+00:00",
+        "score": 99.0,
+        "started_at": "2026-04-14T03:08:19+00:00",
+        "tasks": {
+          "train_bpb": 99.0
+        }
+      },
+      "branch": "evo/run_0001/exp_0002",
+      "children": [],
+      "commit": "1da813a7c4d59b2db68b5ab67a9d4be9d2394ade",
+      "created_at": "2026-04-14T03:07:29+00:00",
+      "eval_epoch": 1,
+      "gate_failures": [],
+      "gate_result": true,
+      "gates": [],
+      "hypothesis": "MATRIX_LR=0.025, SCALAR_LR=0.023: higher LR to compensate for SDPA vs flash-attn-3",
+      "id": "exp_0002",
+      "parent": "exp_0000",
+      "pruned_reason": null,
+      "score": 99.0,
+      "status": "discarded",
+      "updated_at": "2026-04-14T03:08:20+00:00",
+      "worktree": "/home/ray/parameter-golf/.evo/run_0001/worktrees/exp_0002"
+    },
+    "exp_0003": {
+      "benchmark_result": {
+        "ended_at": "2026-04-14T03:08:19+00:00",
+        "score": 99.0,
+        "started_at": "2026-04-14T03:08:19+00:00",
+        "tasks": {
+          "train_bpb": 99.0
+        }
+      },
+      "branch": "evo/run_0001/exp_0003",
+      "children": [],
+      "commit": "1da813a7c4d59b2db68b5ab67a9d4be9d2394ade",
+      "created_at": "2026-04-14T03:07:55+00:00",
+      "eval_epoch": 1,
+      "gate_failures": [],
+      "gate_result": true,
+      "gates": [],
+      "hypothesis": "QK_GAIN_INIT=5.25: match latest competition record attention sharpness",
+      "id": "exp_0003",
+      "parent": "exp_0000",
+      "pruned_reason": null,
+      "score": 99.0,
+      "status": "discarded",
+      "updated_at": "2026-04-14T03:08:19+00:00",
+      "worktree": "/home/ray/parameter-golf/.evo/run_0001/worktrees/exp_0003"
+    },
+    "exp_0004": {
+      "benchmark_result": {
+        "ended_at": "2026-04-14T03:08:16+00:00",
+        "score": 99.0,
+        "started_at": "2026-04-14T03:08:16+00:00",
+        "tasks": {
+          "train_bpb": 99.0
+        }
+      },
+      "branch": "evo/run_0001/exp_0004",
+      "children": [],
+      "commit": "1da813a7c4d59b2db68b5ab67a9d4be9d2394ade",
+      "created_at": "2026-04-14T03:07:57+00:00",
+      "eval_epoch": 1,
+      "gate_failures": [],
+      "gate_result": true,
+      "gates": [],
+      "hypothesis": "QK_GAIN_INIT=5.25: competition record uses 5.25 vs our 5.0, sharper attention initialization",
+      "id": "exp_0004",
+      "parent": "exp_0000",
+      "pruned_reason": null,
+      "score": 99.0,
+      "status": "discarded",
+      "updated_at": "2026-04-14T03:08:16+00:00",
+      "worktree": "/home/ray/parameter-golf/.evo/run_0001/worktrees/exp_0004"
+    },
+    "exp_0005": {
+      "benchmark_result": {
+        "score": 99.0,
+        "tasks": {
+          "train_bpb": 99.0
+        }
+      },
+      "branch": "evo/run_0001/exp_0005",
+      "children": [],
+      "commit": "1da813a7c4d59b2db68b5ab67a9d4be9d2394ade",
+      "created_at": "2026-04-14T03:09:34+00:00",
+      "error": "Could not parse benchmark score from output",
+      "eval_epoch": 1,
+      "gate_result": null,
+      "gates": [],
+      "hypothesis": "QK_GAIN_INIT=5.25",
+      "id": "exp_0005",
+      "parent": "exp_0000",
+      "pruned_reason": null,
+      "score": 99.0,
+      "status": "failed",
+      "updated_at": "2026-04-14T03:22:33+00:00",
+      "worktree": "/home/ray/parameter-golf/.evo/run_0001/worktrees/exp_0005"
+    },
+    "exp_0006": {
+      "benchmark_result": {
+        "score": 99.0,
+        "tasks": {
+          "train_bpb": 99.0
+        }
+      },
+      "branch": "evo/run_0001/exp_0006",
+      "children": [],
+      "commit": "1da813a7c4d59b2db68b5ab67a9d4be9d2394ade",
+      "created_at": "2026-04-14T03:09:34+00:00",
+      "error": "Could not parse benchmark score from output",
+      "eval_epoch": 1,
+      "gate_result": null,
+      "gates": [],
+      "hypothesis": "PARALLEL_RESIDUAL_START=5",
+      "id": "exp_0006",
+      "parent": "exp_0000",
+      "pruned_reason": null,
+      "score": 99.0,
+      "status": "failed",
+      "updated_at": "2026-04-14T03:19:38+00:00",
+      "worktree": "/home/ray/parameter-golf/.evo/run_0001/worktrees/exp_0006"
+    },
+    "exp_0007": {
+      "benchmark_result": {
+        "score": 99.0,
+        "tasks": {
+          "train_bpb": 99.0
+        }
+      },
+      "branch": "evo/run_0001/exp_0007",
+      "children": [],
+      "commit": "1da813a7c4d59b2db68b5ab67a9d4be9d2394ade",
+      "created_at": "2026-04-14T03:09:34+00:00",
+      "error": "Could not parse benchmark score from output",
+      "eval_epoch": 1,
+      "gate_result": null,
+      "gates": [],
+      "hypothesis": "MATRIX_LR=0.025 SCALAR_LR=0.023",
+      "id": "exp_0007",
+      "parent": "exp_0000",
+      "pruned_reason": null,
+      "score": 99.0,
+      "status": "failed",
+      "updated_at": "2026-04-14T03:22:36+00:00",
+      "worktree": "/home/ray/parameter-golf/.evo/run_0001/worktrees/exp_0007"
+    },
+    "exp_0008": {
+      "benchmark_result": {
+        "score": 99.0,
+        "tasks": {
+          "train_bpb": 99.0
+        }
+      },
+      "branch": "evo/run_0001/exp_0008",
+      "children": [],
+      "commit": "1da813a7c4d59b2db68b5ab67a9d4be9d2394ade",
+      "created_at": "2026-04-14T03:10:40+00:00",
+      "error": "Could not parse benchmark score from output",
+      "eval_epoch": 1,
+      "gate_result": null,
+      "gates": [],
+      "hypothesis": "Fix evo_benchmark.py infrastructure: remove unsupported extra_files kwarg from run_smoke/run_qualify calls",
+      "id": "exp_0008",
+      "parent": "exp_0000",
+      "pruned_reason": null,
+      "score": 99.0,
+      "status": "failed",
+      "updated_at": "2026-04-14T03:22:47+00:00",
+      "worktree": "/home/ray/parameter-golf/.evo/run_0001/worktrees/exp_0008"
+    },
+    "exp_0009": {
+      "benchmark_result": null,
+      "branch": "evo/run_0001/exp_0009",
+      "children": [],
+      "commit": "1da813a7c4d59b2db68b5ab67a9d4be9d2394ade",
+      "created_at": "2026-04-14T03:23:45+00:00",
+      "eval_epoch": 1,
+      "gate_result": null,
+      "gates": [],
+      "hypothesis": "QK_GAIN_INIT=5.25 + fixed benchmark (correct dataclass attrs, copy target to repo root)",
+      "id": "exp_0009",
+      "parent": "exp_0000",
+      "pruned_reason": null,
+      "score": null,
+      "status": "active",
+      "updated_at": "2026-04-14T03:31:24+00:00",
+      "worktree": "/home/ray/parameter-golf/.evo/run_0001/worktrees/exp_0009"
+    },
+    "exp_0010": {
+      "benchmark_result": {
+        "score": 2.5374,
+        "tasks": {
+          "train_bpb": 2.5374
+        }
+      },
+      "branch": "evo/run_0001/exp_0010",
+      "children": [],
+      "commit": "1da813a7c4d59b2db68b5ab67a9d4be9d2394ade",
+      "created_at": "2026-04-14T03:23:50+00:00",
+      "error": "Could not parse benchmark score from output",
+      "eval_epoch": 1,
+      "gate_result": null,
+      "gates": [],
+      "hypothesis": "QK_GAIN_INIT=5.25",
+      "id": "exp_0010",
+      "parent": "exp_0000",
+      "pruned_reason": null,
+      "score": 2.5374,
+      "status": "failed",
+      "updated_at": "2026-04-14T03:33:14+00:00",
+      "worktree": "/home/ray/parameter-golf/.evo/run_0001/worktrees/exp_0010"
+    },
+    "exp_0011": {
+      "benchmark_result": null,
+      "branch": "evo/run_0001/exp_0011",
+      "children": [],
+      "commit": "1da813a7c4d59b2db68b5ab67a9d4be9d2394ade",
+      "created_at": "2026-04-14T03:23:50+00:00",
+      "eval_epoch": 1,
+      "gate_result": null,
+      "gates": [],
+      "hypothesis": "PARALLEL_RESIDUAL_START=5",
+      "id": "exp_0011",
+      "parent": "exp_0000",
+      "pruned_reason": null,
+      "score": null,
+      "status": "active",
+      "updated_at": "2026-04-14T03:23:50+00:00",
+      "worktree": "/home/ray/parameter-golf/.evo/run_0001/worktrees/exp_0011"
+    },
+    "exp_0012": {
+      "benchmark_result": null,
+      "branch": "evo/run_0001/exp_0012",
+      "children": [],
+      "commit": "1da813a7c4d59b2db68b5ab67a9d4be9d2394ade",
+      "created_at": "2026-04-14T03:23:50+00:00",
+      "eval_epoch": 1,
+      "gate_result": null,
+      "gates": [],
+      "hypothesis": "MATRIX_LR=0.025 SCALAR_LR=0.023",
+      "id": "exp_0012",
+      "parent": "exp_0000",
+      "pruned_reason": null,
+      "score": null,
+      "status": "active",
+      "updated_at": "2026-04-14T03:23:50+00:00",
+      "worktree": "/home/ray/parameter-golf/.evo/run_0001/worktrees/exp_0012"
+    },
+    "exp_0013": {
+      "benchmark_result": {
+        "ended_at": "2026-04-14T03:41:08+00:00",
+        "score": 99.0,
+        "started_at": "2026-04-14T03:35:49+00:00",
+        "tasks": {
+          "train_bpb": 99.0
+        }
+      },
+      "branch": "evo/run_0001/exp_0013",
+      "children": [],
+      "commit": "1da813a7c4d59b2db68b5ab67a9d4be9d2394ade",
+      "created_at": "2026-04-14T03:35:35+00:00",
+      "eval_epoch": 1,
+      "gate_failures": [],
+      "gate_result": true,
+      "gates": [],
+      "hypothesis": "QK_GAIN_INIT=5.25: competition record default (fixed benchmark: stdout redirect, GCS tokenizer fallback)",
+      "id": "exp_0013",
+      "parent": "exp_0000",
+      "pruned_reason": null,
+      "score": 99.0,
+      "status": "discarded",
+      "updated_at": "2026-04-14T03:41:08+00:00",
+      "worktree": "/home/ray/parameter-golf/.evo/run_0001/worktrees/exp_0013"
+    },
+    "exp_0014": {
+      "benchmark_result": {
+        "ended_at": "2026-04-14T03:51:37+00:00",
+        "score": 2.538,
+        "started_at": "2026-04-14T03:42:05+00:00",
+        "tasks": {
+          "train_bpb": 2.538
+        }
+      },
+      "branch": "evo/run_0001/exp_0014",
+      "children": [
+        "exp_0015",
+        "exp_0016"
+      ],
+      "commit": "8d469e8885d163afc1822e99ff15c0d9aada877b",
+      "created_at": "2026-04-14T03:41:56+00:00",
+      "eval_epoch": 1,
+      "gate_failures": [],
+      "gate_result": true,
+      "gates": [],
+      "hypothesis": "QK_GAIN_INIT=5.25: retry after GCP capacity recovery",
+      "id": "exp_0014",
+      "parent": "exp_0000",
+      "pruned_reason": null,
+      "score": 2.538,
+      "status": "committed",
+      "updated_at": "2026-04-14T03:51:37+00:00",
+      "worktree": "/home/ray/parameter-golf/.evo/run_0001/worktrees/exp_0014"
+    },
+    "exp_0015": {
+      "benchmark_result": {
+        "ended_at": "2026-04-14T04:04:20+00:00",
+        "score": 99.0,
+        "started_at": "2026-04-14T03:52:08+00:00",
+        "tasks": {
+          "train_bpb": 99.0
+        }
+      },
+      "branch": "evo/run_0001/exp_0015",
+      "children": [],
+      "commit": "8d469e8885d163afc1822e99ff15c0d9aada877b",
+      "created_at": "2026-04-14T03:51:53+00:00",
+      "eval_epoch": 1,
+      "gate_failures": [],
+      "gate_result": true,
+      "gates": [],
+      "hypothesis": "ENABLE_LOOPING_AT=0.25: earlier depth recurrence activation (from 0.35), activates looping at 25% vs 35% of training",
+      "id": "exp_0015",
+      "parent": "exp_0014",
+      "pruned_reason": null,
+      "score": 99.0,
+      "status": "discarded",
+      "updated_at": "2026-04-14T04:04:20+00:00",
+      "worktree": "/home/ray/parameter-golf/.evo/run_0001/worktrees/exp_0015"
+    },
+    "exp_0016": {
+      "benchmark_result": {
+        "ended_at": "2026-04-14T04:14:42+00:00",
+        "score": 2.5444,
+        "started_at": "2026-04-14T04:04:55+00:00",
+        "tasks": {
+          "train_bpb": 2.5444
+        }
+      },
+      "branch": "evo/run_0001/exp_0016",
+      "children": [],
+      "commit": "8d469e8885d163afc1822e99ff15c0d9aada877b",
+      "created_at": "2026-04-14T04:04:41+00:00",
+      "eval_epoch": 1,
+      "gate_failures": [],
+      "gate_result": true,
+      "gates": [],
+      "hypothesis": "ENABLE_LOOPING_AT=0.25: earlier depth recurrence (retry, SPOT preemption on first attempt)",
+      "id": "exp_0016",
+      "parent": "exp_0014",
+      "pruned_reason": null,
+      "score": 2.5444,
+      "status": "discarded",
+      "updated_at": "2026-04-14T04:14:42+00:00",
+      "worktree": "/home/ray/parameter-golf/.evo/run_0001/worktrees/exp_0016"
+    },
+    "exp_0017": {
+      "benchmark_result": null,
+      "branch": "evo/run_0001/exp_0017",
+      "children": [],
+      "commit": "1da813a7c4d59b2db68b5ab67a9d4be9d2394ade",
+      "created_at": "2026-04-14T04:11:13+00:00",
+      "eval_epoch": 1,
+      "gate_result": null,
+      "gates": [],
+      "hypothesis": "GPTQ_ADAPTIVE_CLIP=1: qualify step-1000 train_loss=2.1318 on 8xH100",
+      "id": "exp_0017",
+      "parent": "exp_0000",
+      "pruned_reason": null,
+      "score": 2.1318,
+      "status": "committed",
+      "updated_at": "2026-04-14T04:11:18+00:00",
+      "worktree": "/home/ray/parameter-golf/.evo/run_0001/worktrees/exp_0017"
+    },
+    "exp_0018": {
+      "benchmark_result": null,
+      "branch": "evo/run_0001/exp_0018",
+      "children": [
+        "exp_0019",
+        "exp_0020",
+        "exp_0021"
+      ],
+      "commit": "1da813a7c4d59b2db68b5ab67a9d4be9d2394ade",
+      "created_at": "2026-04-14T04:21:10+00:00",
+      "eval_epoch": 1,
+      "gate_result": null,
+      "gates": [],
+      "hypothesis": "WARMDOWN_SHAPE=sqrt: qualify step-1000 train_loss=2.1290 (beats adaptive GPTQ 2.1318)",
+      "id": "exp_0018",
+      "parent": "exp_0000",
+      "pruned_reason": null,
+      "score": 2.129,
+      "status": "committed",
+      "updated_at": "2026-04-14T04:21:15+00:00",
+      "worktree": "/home/ray/parameter-golf/.evo/run_0001/worktrees/exp_0018"
+    },
+    "exp_0019": {
+      "benchmark_result": null,
+      "branch": "evo/run_0001/exp_0019",
+      "children": [],
+      "commit": "1da813a7c4d59b2db68b5ab67a9d4be9d2394ade",
+      "created_at": "2026-04-14T04:24:18+00:00",
+      "eval_epoch": 1,
+      "gate_result": null,
+      "gates": [],
+      "hypothesis": "STACKED sqrt+GPTQ+int7: qualify step-1000=2.1291 (same as sqrt alone, GPTQ/int7 only affect quantization)",
+      "id": "exp_0019",
+      "parent": "exp_0018",
+      "pruned_reason": null,
+      "score": 2.1291,
+      "status": "discarded",
+      "updated_at": "2026-04-14T04:24:22+00:00",
+      "worktree": "/home/ray/parameter-golf/.evo/run_0001/worktrees/exp_0019"
+    },
+    "exp_0020": {
+      "benchmark_result": null,
+      "branch": "evo/run_0001/exp_0020",
+      "children": [],
+      "commit": "1da813a7c4d59b2db68b5ab67a9d4be9d2394ade",
+      "created_at": "2026-04-14T04:58:08+00:00",
+      "eval_epoch": 1,
+      "gate_result": null,
+      "gates": [],
+      "hypothesis": "FULL RUN stacked (sqrt+GPTQ+int7+QK5.25): train_loss=1.9433@step4000 (vs baseline 1.9957). Preempted before GPTQ eval. Config: WARMDOWN_SHAPE=sqrt GPTQ_ADAPTIVE_CLIP=1 EMBED_BITS=7 QK_GAIN_INIT=5.25",
+      "id": "exp_0020",
+      "parent": "exp_0018",
+      "pruned_reason": null,
+      "score": 1.9433,
+      "status": "committed",
+      "updated_at": "2026-04-14T04:58:14+00:00",
+      "worktree": "/home/ray/parameter-golf/.evo/run_0001/worktrees/exp_0020"
+    },
+    "exp_0021": {
+      "benchmark_result": null,
+      "branch": "evo/run_0001/exp_0021",
+      "children": [],
+      "commit": "1da813a7c4d59b2db68b5ab67a9d4be9d2394ade",
+      "created_at": "2026-04-14T05:19:20+00:00",
+      "eval_epoch": 1,
+      "gate_result": null,
+      "gates": [],
+      "hypothesis": "FULL RUN v2 (sqrt+GPTQ+int7+QK5.25): pre-quant val_bpb=1.1236, post-EMA=1.1236. Preempted during GPTQ. Estimated final ~1.127-1.129. SP1024 vocab.",
+      "id": "exp_0021",
+      "parent": "exp_0018",
+      "pruned_reason": null,
+      "score": 1.1236,
+      "status": "committed",
+      "updated_at": "2026-04-14T05:19:26+00:00",
+      "worktree": "/home/ray/parameter-golf/.evo/run_0001/worktrees/exp_0021"
+    },
+    "root": {
+      "branch": null,
+      "children": [
+        "exp_0000"
+      ],
+      "commit": null,
+      "created_at": "2026-04-14T01:01:07+00:00",
+      "eval_epoch": null,
+      "gates": [
+        {
+          "added_at": "2026-04-14T01:01:23+00:00",
+          "command": "python3 -c \"import ast; ast.parse(open('{target}').read()); print('syntax OK', file=__import__('sys').stderr)\"",
+          "name": "syntax_check"
+        }
+      ],
+      "hypothesis": "synthetic root",
+      "id": "root",
+      "parent": null,
+      "pruned_reason": null,
+      "score": null,
+      "status": "root",
+      "updated_at": "2026-04-14T01:01:23+00:00",
+      "worktree": null
+    }
+  },
+  "root": "root"
+}

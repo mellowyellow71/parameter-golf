@@ -45,6 +45,7 @@ from gce_run_experiment import (
     ensure_data,
     upload_results,
 )
+from scaling_laws import ScalingPredictor
 
 # ---------------------------------------------------------------------------
 # State persistence
@@ -747,21 +748,40 @@ def run_auto(
     else:
         print(f"\n  QUALIFY PASSED: reached step {qualify.last_step} (no BPB metric)")
 
-    # Gate: check qualify BPB against known best (from state file)
-    state = _load_state()
-    best_qualify_bpb = None
-    for exp_data in state["experiments"].values():
-        q = exp_data.get("qualify", {})
-        if q.get("status") == "pass" and q.get("step_1000_bpb") is not None:
-            if best_qualify_bpb is None or q["step_1000_bpb"] < best_qualify_bpb:
-                best_qualify_bpb = q["step_1000_bpb"]
+    # Gate: use scaling law regression to predict final BPB and decide
+    if qualify.step_1000_bpb is not None:
+        predictor = ScalingPredictor.load()
+        decision = predictor.decide_qualify(qualify.step_1000_bpb)
+        pred, lo, hi = predictor.predict(qualify.step_1000_bpb)
 
-    if (qualify.step_1000_bpb is not None and best_qualify_bpb is not None
-            and qualify.step_1000_bpb > best_qualify_bpb * 1.05):
-        print(f"  Qualify BPB {qualify.step_1000_bpb:.4f} is >5% worse than "
-              f"best {best_qualify_bpb:.4f}, skipping full run")
-        summary["final_status"] = "qualify_bpb_not_competitive"
-        return summary
+        print(f"  Scaling law prediction: final_bpb={pred:.4f} [{lo:.4f}, {hi:.4f}]")
+        print(f"  Decision: {decision.action} — {decision.reason}")
+
+        summary["qualify"]["predicted_final_bpb"] = pred
+        summary["qualify"]["prediction_interval"] = [lo, hi]
+        summary["qualify"]["decision"] = decision.action
+
+        if decision.action == "kill":
+            print(f"  Pipeline stopped: qualify prediction not competitive")
+            summary["final_status"] = "qualify_bpb_not_competitive"
+            return summary
+    else:
+        # Fallback: check qualify BPB against known best (from state file)
+        state = _load_state()
+        best_qualify_bpb = None
+        for exp_data in state["experiments"].values():
+            q = exp_data.get("qualify", {})
+            if q.get("status") == "pass" and q.get("step_1000_bpb") is not None:
+                if best_qualify_bpb is None or q["step_1000_bpb"] < best_qualify_bpb:
+                    best_qualify_bpb = q["step_1000_bpb"]
+
+        if (best_qualify_bpb is not None
+                and qualify.val_loss_1000 is not None
+                and qualify.val_loss_1000 > best_qualify_bpb * 1.05):
+            print(f"  Qualify val_loss {qualify.val_loss_1000:.4f} is >5% worse than "
+                  f"best {best_qualify_bpb:.4f}, skipping full run")
+            summary["final_status"] = "qualify_bpb_not_competitive"
+            return summary
 
     # Stage 3: Full
     print("\n" + "=" * 60)
@@ -782,6 +802,17 @@ def run_auto(
         if full.artifact_size:
             print(f"  Artifact size: {full.artifact_size:,} bytes "
                   f"({full.artifact_size / 1024 / 1024:.1f} MB)")
+
+        # Auto-calibrate scaling law predictor with paired data
+        if qualify.step_1000_bpb is not None and full.final_bpb is not None:
+            predictor = ScalingPredictor.load()
+            seed = int(env.get("SEED", 1337))
+            predictor.add_calibration_point(name, seed,
+                                            qualify.step_1000_bpb, full.final_bpb)
+            predictor.save()
+            print(f"  Scaling law updated: {predictor.fit.n_points} calibration points, "
+                  f"R²={predictor.fit.r_squared:.3f}")
+
         summary["final_status"] = "done"
     else:
         print(f"\n  FULL RUN FAILED: {full.error}")

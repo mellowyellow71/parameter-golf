@@ -482,6 +482,70 @@ STRATEGIES: list[StrategyConfig] = [
         seeds=[1337, 42],
         description="Architecture: 12 layers, MLP 3x",
     ),
+
+    # ===== PHASE 1: QUICK WINS (winning_base_decoded.py stack) =====
+
+    # Calibration: baseline on winning_base_decoded.py (for scaling law regression)
+    StrategyConfig(
+        name="P0-calibration-baseline", tier=0, priority=100,
+        script="winning_base_decoded.py",
+        env={},
+        seeds=[1337, 42, 7, 2024, 314],
+        description="Phase 0: Calibration baseline — collect paired (step_1000, final) data",
+    ),
+
+    # P1-01: 1-sqrt cooldown schedule
+    StrategyConfig(
+        name="P1-01-sqrt-cooldown", tier=0, priority=95,
+        script="winning_base_decoded.py",
+        env={"WARMDOWN_SHAPE": "sqrt"},
+        seeds=[1337, 42, 7],
+        description="Phase 1: 1-sqrt warmdown curve (faster initial decay, slower tail)",
+    ),
+    # P1-01b: cosine cooldown schedule
+    StrategyConfig(
+        name="P1-01b-cosine-cooldown", tier=0, priority=94,
+        script="winning_base_decoded.py",
+        env={"WARMDOWN_SHAPE": "cosine"},
+        seeds=[1337, 42, 7],
+        description="Phase 1: cosine warmdown curve",
+    ),
+
+    # P1-02: Per-layer adaptive GPTQ clip sigmas
+    StrategyConfig(
+        name="P1-02-adaptive-gptq", tier=0, priority=93,
+        script="winning_base_decoded.py",
+        env={"GPTQ_ADAPTIVE_CLIP": "1"},
+        seeds=[1337, 42, 7],
+        description="Phase 1: Tighter GPTQ clip for sensitive MLP_down layers",
+    ),
+
+    # P1-03: Int7 embeddings (frees ~62.5KB)
+    StrategyConfig(
+        name="P1-03-int7-embeds", tier=0, priority=92,
+        script="winning_base_decoded.py",
+        env={"EMBED_BITS": "7"},
+        seeds=[1337, 42, 7],
+        description="Phase 1: Int7 embeddings to free space for better matrix quantization",
+    ),
+
+    # P1-04: Batch size warmup
+    StrategyConfig(
+        name="P1-04-batch-warmup", tier=0, priority=91,
+        script="winning_base_decoded.py",
+        env={"BATCH_WARMUP_FRAC": "0.3"},
+        seeds=[1337, 42, 7],
+        description="Phase 1: Ramp batch size from 1/3 to full over first 30% of training",
+    ),
+
+    # P1-05: Combined best quick wins (to be updated after individual results)
+    StrategyConfig(
+        name="P1-05-combined-quickwins", tier=0, priority=85,
+        script="winning_base_decoded.py",
+        env={"WARMDOWN_SHAPE": "sqrt", "GPTQ_ADAPTIVE_CLIP": "1", "EMBED_BITS": "7"},
+        seeds=[1337, 42, 7],
+        description="Phase 1: Stack sqrt cooldown + adaptive GPTQ + int7 embeds",
+    ),
 ]
 
 
