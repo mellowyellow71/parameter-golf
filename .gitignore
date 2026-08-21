@@ -7,3 +7,8 @@ final_model.int8.ptz
 logs/
 __pycache__/
 *.pyc
+
+# runtime artifacts
+.gradio/
+*.log
+*.pid

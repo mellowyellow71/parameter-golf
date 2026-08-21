@@ -290,21 +290,21 @@
     "p1-cosine-cooldown": {
       "smoke": {
         "status": "pass",
-        "train_loss_last": 2.5429,
+        "train_loss_last": 2.5452,
         "last_step": 200,
         "loss_decreased": true,
         "error": "",
-        "timestamp": "2026-04-13T22:36:11.626308"
+        "timestamp": "2026-04-14T12:36:52.622687"
       }
     },
     "p1-sqrt-cooldown": {
       "smoke": {
         "status": "pass",
-        "train_loss_last": 2.5425,
+        "train_loss_last": 2.5398,
         "last_step": 200,
         "loss_decreased": true,
         "error": "",
-        "timestamp": "2026-04-13T22:36:12.447065"
+        "timestamp": "2026-04-14T12:36:46.817213"
       }
     },
     "win-wd-010": {
@@ -350,21 +350,21 @@
     "p1-adaptive-gptq": {
       "smoke": {
         "status": "pass",
-        "train_loss_last": 2.5418,
+        "train_loss_last": 2.5408,
         "last_step": 200,
         "loss_decreased": true,
         "error": "",
-        "timestamp": "2026-04-13T22:48:09.970695"
+        "timestamp": "2026-04-14T12:38:36.157627"
       }
     },
     "p1-int7-embeds": {
       "smoke": {
         "status": "pass",
-        "train_loss_last": 2.5435,
+        "train_loss_last": 2.5429,
         "last_step": 200,
         "loss_decreased": true,
         "error": "",
-        "timestamp": "2026-04-13T22:48:12.830086"
+        "timestamp": "2026-04-14T12:45:53.488992"
       }
     },
     "p0-int7-v2": {
@@ -409,22 +409,19 @@
     },
     "p1-batch-warmup": {
       "smoke": {
-        "status": "pass",
-        "train_loss_last": 2.7635,
-        "last_step": 150,
-        "loss_decreased": true,
-        "error": "",
-        "timestamp": "2026-04-13T22:57:25.491941"
+        "status": "error",
+        "error": "Command '['gcloud', 'compute', 'ssh', 'ray@pgolf-exp-smoke-p1-batch-warmup-20260414-123707', '--zone', 'us-central1-a', '--project', 'bryan-usage-0', '--strict-host-key-checking=no', '--command', 'tmux has-session -t training 2>/dev/null && echo running || echo stopped']' timed out after 15 seconds",
+        "timestamp": "2026-04-14T12:41:21.434413"
       }
     },
     "p1-stack-quickwins": {
       "smoke": {
         "status": "pass",
-        "train_loss_last": 2.5433,
+        "train_loss_last": 2.5409,
         "last_step": 200,
         "loss_decreased": true,
         "error": "",
-        "timestamp": "2026-04-13T22:57:43.517733"
+        "timestamp": "2026-04-14T12:46:03.247755"
       }
     },
     "p0-combo-best": {
@@ -459,9 +456,12 @@
     },
     "win-combo-wideloop-earlystart": {
       "smoke": {
-        "status": "error",
-        "error": "Command '['gcloud', 'compute', 'ssh', 'ray@pgolf-exp-smoke-win-combo-wideloop-earlystart-20260413-230640', '--zone', 'us-central1-b', '--project', 'bryan-usage-0', '--strict-host-key-checking=no', '--command', 'tmux has-session -t training 2>/dev/null && echo running || echo stopped']' timed out after 15 seconds",
-        "timestamp": "2026-04-13T23:10:14.320623"
+        "status": "pass",
+        "train_loss_last": 2.7744,
+        "last_step": 150,
+        "loss_decreased": true,
+        "error": "",
+        "timestamp": "2026-04-14T12:36:47.205764"
       }
     },
     "win-combo-mlp35-3loop": {
@@ -581,6 +581,11 @@
         "loss_decreased": true,
         "error": "",
         "timestamp": "2026-04-14T00:32:19.899396"
+      },
+      "qualify": {
+        "status": "error",
+        "error": "Command '['gcloud', 'compute', 'ssh', 'ray@pgolf-exp-qual-a1-stack-quickwins-20260414-111138', '--zone', 'us-central1-b', '--project', 'bryan-usage-0', '--strict-host-key-checking=no', '--command', 'tmux has-session -t training 2>/dev/null && echo running || echo stopped']' timed out after 15 seconds",
+        "timestamp": "2026-04-14T11:14:27.120564"
       }
     },
     "a1-adaptive-gptq": {
@@ -591,6 +596,14 @@
         "loss_decreased": true,
         "error": "",
         "timestamp": "2026-04-14T00:32:21.387166"
+      },
+      "qualify": {
+        "status": "pass",
+        "step_1000_bpb": 1.2485,
+        "val_loss_1000": 2.108,
+        "last_step": 1100,
+        "error": "",
+        "timestamp": "2026-04-14T11:07:33.356367"
       }
     },
     "a1-sqrt-cooldown": {
@@ -601,6 +614,14 @@
         "loss_decreased": true,
         "error": "",
         "timestamp": "2026-04-14T00:32:28.848721"
+      },
+      "qualify": {
+        "status": "pass",
+        "step_1000_bpb": 1.2491,
+        "val_loss_1000": 2.109,
+        "last_step": 1100,
+        "error": "",
+        "timestamp": "2026-04-14T10:53:45.030840"
       }
     },
     "a1-cosine-cooldown": {
@@ -611,6 +632,309 @@
         "loss_decreased": true,
         "error": "",
         "timestamp": "2026-04-14T00:32:31.298087"
+      },
+      "qualify": {
+        "status": "pass",
+        "step_1000_bpb": 1.2485,
+        "val_loss_1000": 2.1081,
+        "last_step": 1200,
+        "error": "",
+        "timestamp": "2026-04-14T11:28:48.860928"
+      }
+    },
+    "a1-batch-warmup-030": {
+      "qualify": {
+        "status": "pass",
+        "step_1000_bpb": 1.2494,
+        "val_loss_1000": 2.1095,
+        "last_step": 1300,
+        "error": "",
+        "timestamp": "2026-04-14T11:39:40.096952"
+      },
+      "smoke": {
+        "status": "pass",
+        "train_loss_last": 2.543,
+        "last_step": 200,
+        "loss_decreased": true,
+        "error": "",
+        "timestamp": "2026-04-14T12:50:17.778468"
+      }
+    },
+    "a12-combo-best-v2": {
+      "qualify": {
+        "status": "pass",
+        "step_1000_bpb": 1.2512,
+        "val_loss_1000": 2.1127,
+        "last_step": 1300,
+        "error": "",
+        "timestamp": "2026-04-14T11:50:39.220429"
+      }
+    },
+    "win-warmdown-065": {
+      "smoke": {
+        "status": "pass",
+        "train_loss_last": 2.7606,
+        "last_step": 150,
+        "loss_decreased": true,
+        "error": "",
+        "timestamp": "2026-04-14T12:17:52.330692"
+      }
+    },
+    "win-loop-4-5": {
+      "smoke": {
+        "status": "pass",
+        "train_loss_last": 2.5423,
+        "last_step": 200,
+        "loss_decreased": true,
+        "error": "",
+        "timestamp": "2026-04-14T12:18:06.759163"
+      }
+    },
+    "win-wd-008": {
+      "smoke": {
+        "status": "pass",
+        "train_loss_last": 2.5478,
+        "last_step": 200,
+        "loss_decreased": true,
+        "error": "",
+        "timestamp": "2026-04-14T12:18:08.901127"
+      }
+    },
+    "win-parallel-9": {
+      "smoke": {
+        "status": "pass",
+        "train_loss_last": 2.544,
+        "last_step": 200,
+        "loss_decreased": true,
+        "error": "",
+        "timestamp": "2026-04-14T12:18:11.783380"
+      }
+    },
+    "win-lr-020": {
+      "smoke": {
+        "status": "pass",
+        "train_loss_last": 2.572,
+        "last_step": 200,
+        "loss_decreased": true,
+        "error": "",
+        "timestamp": "2026-04-14T12:20:00.248692"
+      }
+    },
+    "win-ema-0997": {
+      "smoke": {
+        "status": "pass",
+        "train_loss_last": 2.5443,
+        "last_step": 200,
+        "loss_decreased": true,
+        "error": "",
+        "timestamp": "2026-04-14T12:27:22.154854"
+      }
+    },
+    "win-loop-late-045": {
+      "smoke": {
+        "status": "pass",
+        "train_loss_last": 2.5446,
+        "last_step": 200,
+        "loss_decreased": true,
+        "error": "",
+        "timestamp": "2026-04-14T12:27:27.494250"
+      }
+    },
+    "win-mlp-45": {
+      "smoke": {
+        "status": "pass",
+        "train_loss_last": 2.7534,
+        "last_step": 150,
+        "loss_decreased": true,
+        "error": "",
+        "timestamp": "2026-04-14T12:27:29.527418"
+      }
+    },
+    "win-no-skipgates": {
+      "smoke": {
+        "status": "pass",
+        "train_loss_last": 2.8146,
+        "last_step": 150,
+        "loss_decreased": true,
+        "error": "",
+        "timestamp": "2026-04-14T12:27:34.957356"
+      }
+    },
+    "win-no-parallel": {
+      "smoke": {
+        "status": "pass",
+        "train_loss_last": 2.5417,
+        "last_step": 200,
+        "loss_decreased": true,
+        "error": "",
+        "timestamp": "2026-04-14T12:29:16.880802"
+      }
+    },
+    "win-no-loop": {
+      "smoke": {
+        "status": "pass",
+        "train_loss_last": 2.546,
+        "last_step": 200,
+        "loss_decreased": true,
+        "error": "",
+        "timestamp": "2026-04-14T12:36:34.387836"
+      }
+    },
+    "old-baseline": {
+      "smoke": {
+        "status": "fail",
+        "train_loss_last": null,
+        "last_step": 0,
+        "loss_decreased": false,
+        "error": "No training steps completed",
+        "timestamp": "2026-04-14T12:46:10.178677"
+      }
+    },
+    "old-qk4-xsa11": {
+      "smoke": {
+        "status": "fail",
+        "train_loss_last": null,
+        "last_step": 0,
+        "loss_decreased": false,
+        "error": "No training steps completed",
+        "timestamp": "2026-04-14T12:47:49.110265"
+      }
+    },
+    "a2-qkgain-475": {
+      "smoke": {
+        "status": "pass",
+        "train_loss_last": 2.5405,
+        "last_step": 200,
+        "loss_decreased": true,
+        "error": "",
+        "timestamp": "2026-04-14T12:55:17.931862"
+      }
+    },
+    "a2-qkgain-500": {
+      "smoke": {
+        "status": "pass",
+        "train_loss_last": 2.7678,
+        "last_step": 150,
+        "loss_decreased": true,
+        "error": "",
+        "timestamp": "2026-04-14T12:55:27.530503"
+      }
+    },
+    "a2-qkgain-550": {
+      "smoke": {
+        "status": "pass",
+        "train_loss_last": 2.7691,
+        "last_step": 150,
+        "loss_decreased": true,
+        "error": "",
+        "timestamp": "2026-04-14T12:55:28.902463"
+      }
+    },
+    "a2-qkgain-600": {
+      "smoke": {
+        "status": "pass",
+        "train_loss_last": 2.5494,
+        "last_step": 200,
+        "loss_decreased": true,
+        "error": "",
+        "timestamp": "2026-04-14T12:57:16.166832"
+      }
+    },
+    "a3-lr-025-wd-010": {
+      "smoke": {
+        "status": "pass",
+        "train_loss_last": 2.5171,
+        "last_step": 200,
+        "loss_decreased": true,
+        "error": "",
+        "timestamp": "2026-04-14T12:59:31.435606"
+      }
+    },
+    "a3-lr-018": {
+      "smoke": {
+        "status": "pass",
+        "train_loss_last": 2.6129,
+        "last_step": 200,
+        "loss_decreased": true,
+        "error": "",
+        "timestamp": "2026-04-14T13:04:34.013320"
+      }
+    },
+    "a3-wd-012": {
+      "smoke": {
+        "status": "pass",
+        "train_loss_last": 2.5402,
+        "last_step": 200,
+        "loss_decreased": true,
+        "error": "",
+        "timestamp": "2026-04-14T13:04:42.625131"
+      }
+    },
+    "a3-wd-007": {
+      "smoke": {
+        "status": "pass",
+        "train_loss_last": 2.5464,
+        "last_step": 200,
+        "loss_decreased": true,
+        "error": "",
+        "timestamp": "2026-04-14T13:04:51.223109"
+      }
+    },
+    "a4-warmdown-080": {
+      "smoke": {
+        "status": "pass",
+        "train_loss_last": 2.557,
+        "last_step": 200,
+        "loss_decreased": true,
+        "error": "",
+        "timestamp": "2026-04-14T13:06:38.534148"
+      }
+    },
+    "a4-warmdown-065": {
+      "smoke": {
+        "status": "pass",
+        "train_loss_last": 2.5335,
+        "last_step": 200,
+        "loss_decreased": true,
+        "error": "",
+        "timestamp": "2026-04-14T13:09:07.422211"
+      }
+    },
+    "a6-loop-2-6": {
+      "smoke": {
+        "status": "fail",
+        "error": "Training failed to start",
+        "timestamp": "2026-04-14T13:11:31.932945"
+      }
+    },
+    "a5-ema-0993": {
+      "smoke": {
+        "status": "pass",
+        "train_loss_last": 2.5439,
+        "last_step": 200,
+        "loss_decreased": true,
+        "error": "",
+        "timestamp": "2026-04-14T13:13:59.641174"
+      }
+    },
+    "a4-warmdown-085-sqrt": {
+      "smoke": {
+        "status": "pass",
+        "train_loss_last": 2.5684,
+        "last_step": 200,
+        "loss_decreased": true,
+        "error": "",
+        "timestamp": "2026-04-14T13:14:04.161470"
+      }
+    },
+    "a5-ema-0997": {
+      "smoke": {
+        "status": "pass",
+        "train_loss_last": 2.7661,
+        "last_step": 150,
+        "loss_decreased": true,
+        "error": "",
+        "timestamp": "2026-04-14T13:14:23.802697"
       }
     }
   }

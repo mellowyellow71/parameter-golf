@@ -41,7 +41,7 @@ gce:
 
   # Provisioning strategy
   prefer_spot: true
-  fallback_to_ondemand: true
+  fallback_to_ondemand: false
   ssh_user: "ray"
   ssh_timeout_seconds: 300
 
@@ -55,7 +55,7 @@ gce:
   smoketest_wallclock_seconds: 300  # 5 min on 1xH100 → ~340 steps
   smoketest_poll_seconds: 15
   # Quick qualify (8xH100, short run)
-  qualify_wallclock_seconds: 180    # 3 min on 8xH100 → ~1500 steps
+  qualify_wallclock_seconds: 240    # 4 min on 8xH100 — enough for step 1000 + validation
 
   # Instance naming
   instance_prefix: "pgolf-exp"

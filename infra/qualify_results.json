@@ -1,0 +1,132 @@
+{
+  "results": {
+    "a12-combo-best-v1": {
+      "name": "a12-combo-best-v1",
+      "status": "pass",
+      "step_1000_bpb": 1.2222,
+      "val_loss_1000": 2.0637,
+      "last_step": 1144,
+      "error": null,
+      "env": {
+        "WARMDOWN_SHAPE": "sqrt",
+        "GPTQ_ADAPTIVE_CLIP": "1",
+        "BATCH_WARMUP_FRAC": "0.3",
+        "EMA_DECAY": "0.997",
+        "WARMDOWN_FRAC": "0.80"
+      },
+      "description": "Mega combo v1: sqrt + adaptive GPTQ + batch warmup + EMA 0.997 + warmdown 0.80",
+      "priority": "P0",
+      "tier": 0,
+      "category": "A",
+      "timestamp": "2026-04-14T02:40:00"
+    },
+    "a1-sqrt-cooldown": {
+      "name": "a1-sqrt-cooldown",
+      "status": "pass",
+      "step_1000_bpb": 1.2491,
+      "val_loss_1000": 2.109,
+      "last_step": 1100,
+      "error": "",
+      "env": {
+        "WARMDOWN_SHAPE": "sqrt"
+      },
+      "description": "1-sqrt cooldown (faster initial decay, slower tail) -- TMLR 2025",
+      "priority": "P0",
+      "tier": 0,
+      "category": "A",
+      "timestamp": "2026-04-14T10:54:43.453148"
+    },
+    "a1-adaptive-gptq": {
+      "name": "a1-adaptive-gptq",
+      "status": "pass",
+      "step_1000_bpb": 1.2485,
+      "val_loss_1000": 2.108,
+      "last_step": 1100,
+      "error": "",
+      "env": {
+        "GPTQ_ADAPTIVE_CLIP": "1"
+      },
+      "description": "Per-layer GPTQ clip sigmas (tighter for MLP_down layers 9-10)",
+      "priority": "P0",
+      "tier": 0,
+      "category": "A",
+      "timestamp": "2026-04-14T11:08:32.186554"
+    },
+    "a1-stack-quickwins": {
+      "name": "a1-stack-quickwins",
+      "status": "error",
+      "step_1000_bpb": null,
+      "val_loss_1000": null,
+      "last_step": 0,
+      "error": "Command '['gcloud', 'compute', 'ssh', 'ray@pgolf-exp-qual-a1-stack-quickwins-20260414-111138', '--zone', 'us-central1-b', '--project', 'bryan-usage-0', '--strict-host-key-checking=no', '--command', 'tmux has-session -t training 2>/dev/null && echo running || echo stopped']' timed out after 15 seconds",
+      "env": {
+        "WARMDOWN_SHAPE": "sqrt",
+        "GPTQ_ADAPTIVE_CLIP": "1"
+      },
+      "description": "Stack sqrt cooldown + adaptive GPTQ (both orthogonal)",
+      "priority": "P0",
+      "tier": 0,
+      "category": "A",
+      "timestamp": "2026-04-14T11:14:33.248173"
+    },
+    "a1-cosine-cooldown": {
+      "name": "a1-cosine-cooldown",
+      "status": "pass",
+      "step_1000_bpb": 1.2485,
+      "val_loss_1000": 2.1081,
+      "last_step": 1200,
+      "error": "",
+      "env": {
+        "WARMDOWN_SHAPE": "cosine"
+      },
+      "description": "Cosine cooldown curve (compare against sqrt)",
+      "priority": "P0",
+      "tier": 0,
+      "category": "A",
+      "timestamp": "2026-04-14T11:29:48.311906"
+    },
+    "a1-batch-warmup-030": {
+      "name": "a1-batch-warmup-030",
+      "status": "pass",
+      "step_1000_bpb": 1.2494,
+      "val_loss_1000": 2.1095,
+      "last_step": 1300,
+      "error": "",
+      "env": {
+        "BATCH_WARMUP_FRAC": "0.3"
+      },
+      "description": "Ramp batch 262K->786K over first 30% (43% more grad steps early)",
+      "priority": "P0",
+      "tier": 0,
+      "category": "A",
+      "timestamp": "2026-04-14T11:40:37.863229"
+    },
+    "a12-combo-best-v2": {
+      "name": "a12-combo-best-v2",
+      "status": "pass",
+      "step_1000_bpb": 1.2512,
+      "val_loss_1000": 2.1127,
+      "last_step": 1300,
+      "error": "",
+      "env": {
+        "WARMDOWN_SHAPE": "sqrt",
+        "GPTQ_ADAPTIVE_CLIP": "1",
+        "BATCH_WARMUP_FRAC": "0.3",
+        "EMBED_BITS": "7",
+        "MATRIX_LR": "0.025",
+        "SCALAR_LR": "0.023",
+        "MUON_WD": "0.10",
+        "EMBED_WD": "0.09"
+      },
+      "description": "Mega combo v2: sqrt + adaptive GPTQ + batch warmup + int7 embeds + higher LR/WD",
+      "priority": "P0",
+      "tier": 0,
+      "category": "A",
+      "timestamp": "2026-04-14T11:51:37.068552"
+    }
+  },
+  "best": "a12-combo-best-v1",
+  "best_bpb": 1.2222,
+  "runs": 9,
+  "last_updated": "2026-04-14T11:51:37.068566"
+}

@@ -32,6 +32,7 @@ sys.path.insert(0, str(Path(__file__).parent))
 
 from funnel import run_smoke, SmokeResult
 from gce_provision import load_config
+from strategies_v2 import CATEGORY_A as STRATEGIES_V2
 
 
 # ---------------------------------------------------------------------------
@@ -398,7 +399,20 @@ def main():
     config = load_config()
 
     if args.command == "screen":
-        strategies = STRATEGIES
+        # Use strategies_v2 Category A (env-only, no code changes)
+        v2_strats = [
+            Strategy(s.name, s.script, s.env, s.description, tier=s.tier, source=s.source)
+            for s in STRATEGIES_V2 if not s.needs_code
+        ]
+        strategies = STRATEGIES + v2_strats
+        # Deduplicate by name
+        seen = set()
+        unique = []
+        for s in strategies:
+            if s.name not in seen:
+                seen.add(s.name)
+                unique.append(s)
+        strategies = unique
         if args.tier is not None:
             strategies = [s for s in strategies if s.tier == args.tier]
         run_mass_screen(strategies, config, parallel=args.parallel, resume=not args.no_resume)

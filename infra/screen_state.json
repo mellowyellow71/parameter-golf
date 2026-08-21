@@ -218,11 +218,11 @@
     },
     "win-combo-wideloop-earlystart": {
       "name": "win-combo-wideloop-earlystart",
-      "status": "error",
-      "train_loss": null,
-      "last_step": 0,
-      "loss_decreased": false,
-      "error": "Command '['gcloud', 'compute', 'ssh', 'ray@pgolf-exp-smoke-win-combo-wideloop-earlystart-20260413-230640', '--zone', 'us-central1-b', '--project', 'bryan-usage-0', '--strict-host-key-checking=no', '--command', 'tmux has-session -t training 2>/dev/null && echo running || echo stopped']' timed out after 15 seconds",
+      "status": "pass",
+      "train_loss": 2.7744,
+      "last_step": 150,
+      "loss_decreased": true,
+      "error": "",
       "script": "winning_base_decoded.py",
       "env": {
         "LOOP_START": "2",
@@ -231,7 +231,7 @@
       },
       "description": "Wide recurrence (2-6) + early activation",
       "tier": 1,
-      "timestamp": "2026-04-13T23:10:30.794819"
+      "timestamp": "2026-04-14T12:37:07.750544"
     },
     "win-combo-mlp35-3loop": {
       "name": "win-combo-mlp35-3loop",
@@ -301,7 +301,529 @@
         "WARMDOWN_SHAPE": "cosine"
       },
       "description": "Cosine cooldown curve (compare against sqrt)"
+    },
+    "win-warmdown-065": {
+      "name": "win-warmdown-065",
+      "status": "pass",
+      "train_loss": 2.7606,
+      "last_step": 150,
+      "loss_decreased": true,
+      "error": "",
+      "script": "winning_base_decoded.py",
+      "env": {
+        "WARMDOWN_FRAC": "0.65"
+      },
+      "description": "Shorter warmdown (65%)",
+      "tier": 2,
+      "timestamp": "2026-04-14T12:18:18.808647"
+    },
+    "win-loop-4-5": {
+      "name": "win-loop-4-5",
+      "status": "pass",
+      "train_loss": 2.5423,
+      "last_step": 200,
+      "loss_decreased": true,
+      "error": "",
+      "script": "winning_base_decoded.py",
+      "env": {
+        "LOOP_START": "4",
+        "LOOP_END": "5"
+      },
+      "description": "Narrower recurrence (layers 4-5 only)",
+      "tier": 2,
+      "timestamp": "2026-04-14T12:18:27.376936"
+    },
+    "win-wd-008": {
+      "name": "win-wd-008",
+      "status": "pass",
+      "train_loss": 2.5478,
+      "last_step": 200,
+      "loss_decreased": true,
+      "error": "",
+      "script": "winning_base_decoded.py",
+      "env": {
+        "MUON_WD": "0.08",
+        "EMBED_WD": "0.07"
+      },
+      "description": "Lower weight decay",
+      "tier": 2,
+      "timestamp": "2026-04-14T12:18:29.352979"
+    },
+    "win-parallel-9": {
+      "name": "win-parallel-9",
+      "status": "pass",
+      "train_loss": 2.544,
+      "last_step": 200,
+      "loss_decreased": true,
+      "error": "",
+      "script": "winning_base_decoded.py",
+      "env": {
+        "PARALLEL_RESIDUAL_START": "9"
+      },
+      "description": "Later parallel residuals (layer 9)",
+      "tier": 2,
+      "timestamp": "2026-04-14T12:18:34.279047"
+    },
+    "win-lr-020": {
+      "name": "win-lr-020",
+      "status": "pass",
+      "train_loss": 2.572,
+      "last_step": 200,
+      "loss_decreased": true,
+      "error": "",
+      "script": "winning_base_decoded.py",
+      "env": {
+        "MATRIX_LR": "0.020",
+        "SCALAR_LR": "0.018"
+      },
+      "description": "Lower LR",
+      "tier": 2,
+      "timestamp": "2026-04-14T12:20:23.022156"
+    },
+    "win-ema-0997": {
+      "name": "win-ema-0997",
+      "status": "pass",
+      "train_loss": 2.5443,
+      "last_step": 200,
+      "loss_decreased": true,
+      "error": "",
+      "script": "winning_base_decoded.py",
+      "env": {
+        "EMA_DECAY": "0.997"
+      },
+      "description": "Higher EMA decay",
+      "tier": 2,
+      "timestamp": "2026-04-14T12:27:42.908007"
+    },
+    "win-loop-late-045": {
+      "name": "win-loop-late-045",
+      "status": "pass",
+      "train_loss": 2.5446,
+      "last_step": 200,
+      "loss_decreased": true,
+      "error": "",
+      "script": "winning_base_decoded.py",
+      "env": {
+        "ENABLE_LOOPING_AT": "0.45"
+      },
+      "description": "Later recurrence activation (45%)",
+      "tier": 2,
+      "timestamp": "2026-04-14T12:27:47.916776"
+    },
+    "win-mlp-45": {
+      "name": "win-mlp-45",
+      "status": "pass",
+      "train_loss": 2.7534,
+      "last_step": 150,
+      "loss_decreased": true,
+      "error": "",
+      "script": "winning_base_decoded.py",
+      "env": {
+        "MLP_MULT": "4.5"
+      },
+      "description": "Wider MLP (4.5x, fewer steps but more capacity)",
+      "tier": 2,
+      "timestamp": "2026-04-14T12:27:49.867554"
+    },
+    "win-no-skipgates": {
+      "name": "win-no-skipgates",
+      "status": "pass",
+      "train_loss": 2.8146,
+      "last_step": 150,
+      "loss_decreased": true,
+      "error": "",
+      "script": "winning_base_decoded.py",
+      "env": {
+        "SKIP_GATES_ENABLED": "0"
+      },
+      "description": "Disable skip gates (simpler architecture)",
+      "tier": 2,
+      "timestamp": "2026-04-14T12:27:55.289716"
+    },
+    "win-no-parallel": {
+      "name": "win-no-parallel",
+      "status": "pass",
+      "train_loss": 2.5417,
+      "last_step": 200,
+      "loss_decreased": true,
+      "error": "",
+      "script": "winning_base_decoded.py",
+      "env": {
+        "PARALLEL_RESIDUAL_START": "99"
+      },
+      "description": "Disable parallel residuals (all sequential)",
+      "tier": 2,
+      "timestamp": "2026-04-14T12:29:39.430608"
+    },
+    "win-no-loop": {
+      "name": "win-no-loop",
+      "status": "pass",
+      "train_loss": 2.546,
+      "last_step": 200,
+      "loss_decreased": true,
+      "error": "",
+      "script": "winning_base_decoded.py",
+      "env": {
+        "NUM_LOOPS": "1"
+      },
+      "description": "Disable depth recurrence (standard 11L)",
+      "tier": 2,
+      "timestamp": "2026-04-14T12:36:57.387805"
+    },
+    "p1-sqrt-cooldown": {
+      "name": "p1-sqrt-cooldown",
+      "status": "pass",
+      "train_loss": 2.5398,
+      "last_step": 200,
+      "loss_decreased": true,
+      "error": "",
+      "script": "winning_base_decoded.py",
+      "env": {
+        "WARMDOWN_SHAPE": "sqrt"
+      },
+      "description": "1-sqrt cooldown (faster initial decay, slower tail)",
+      "tier": 0,
+      "timestamp": "2026-04-14T12:37:07.173975"
+    },
+    "p1-cosine-cooldown": {
+      "name": "p1-cosine-cooldown",
+      "status": "pass",
+      "train_loss": 2.5452,
+      "last_step": 200,
+      "loss_decreased": true,
+      "error": "",
+      "script": "winning_base_decoded.py",
+      "env": {
+        "WARMDOWN_SHAPE": "cosine"
+      },
+      "description": "Cosine cooldown curve",
+      "tier": 0,
+      "timestamp": "2026-04-14T12:37:15.307794"
+    },
+    "p1-adaptive-gptq": {
+      "name": "p1-adaptive-gptq",
+      "status": "pass",
+      "train_loss": 2.5408,
+      "last_step": 200,
+      "loss_decreased": true,
+      "error": "",
+      "script": "winning_base_decoded.py",
+      "env": {
+        "GPTQ_ADAPTIVE_CLIP": "1"
+      },
+      "description": "Per-layer GPTQ clip (tighter for MLP_down)",
+      "tier": 0,
+      "timestamp": "2026-04-14T12:38:58.916898"
+    },
+    "p1-batch-warmup": {
+      "name": "p1-batch-warmup",
+      "status": "error",
+      "train_loss": null,
+      "last_step": 0,
+      "loss_decreased": false,
+      "error": "Command '['gcloud', 'compute', 'ssh', 'ray@pgolf-exp-smoke-p1-batch-warmup-20260414-123707', '--zone', 'us-central1-a', '--project', 'bryan-usage-0', '--strict-host-key-checking=no', '--command', 'tmux has-session -t training 2>/dev/null && echo running || echo stopped']' timed out after 15 seconds",
+      "script": "winning_base_decoded.py",
+      "env": {
+        "BATCH_WARMUP_FRAC": "0.3"
+      },
+      "description": "Ramp batch 262K->786K over first 30%",
+      "tier": 0,
+      "timestamp": "2026-04-14T12:41:27.720207"
+    },
+    "p1-int7-embeds": {
+      "name": "p1-int7-embeds",
+      "status": "pass",
+      "train_loss": 2.5429,
+      "last_step": 200,
+      "loss_decreased": true,
+      "error": "",
+      "script": "winning_base_decoded.py",
+      "env": {
+        "EMBED_BITS": "7"
+      },
+      "description": "Int7 embeddings (frees 62KB for matrices)",
+      "tier": 0,
+      "timestamp": "2026-04-14T12:46:14.436620"
+    },
+    "p1-stack-quickwins": {
+      "name": "p1-stack-quickwins",
+      "status": "pass",
+      "train_loss": 2.5409,
+      "last_step": 200,
+      "loss_decreased": true,
+      "error": "",
+      "script": "winning_base_decoded.py",
+      "env": {
+        "WARMDOWN_SHAPE": "sqrt",
+        "GPTQ_ADAPTIVE_CLIP": "1",
+        "EMBED_BITS": "7"
+      },
+      "description": "Stack all quick wins (sqrt + adaptive GPTQ + int7)",
+      "tier": 0,
+      "timestamp": "2026-04-14T12:46:25.586375"
+    },
+    "old-baseline": {
+      "name": "old-baseline",
+      "status": "fail",
+      "train_loss": null,
+      "last_step": 0,
+      "loss_decreased": false,
+      "error": "No training steps completed",
+      "script": "experiment1.py",
+      "env": {},
+      "description": "Original SP1024 baseline for comparison",
+      "tier": 3,
+      "timestamp": "2026-04-14T12:46:31.538953"
+    },
+    "old-qk4-xsa11": {
+      "name": "old-qk4-xsa11",
+      "status": "fail",
+      "train_loss": null,
+      "last_step": 0,
+      "loss_decreased": false,
+      "error": "No training steps completed",
+      "script": "experiment1.py",
+      "env": {
+        "QK_GAIN_INIT": "4.0",
+        "XSA_LAST_N": "11"
+      },
+      "description": "Best from old experiments (1.1527 BPB)",
+      "tier": 3,
+      "timestamp": "2026-04-14T12:48:11.482674"
+    },
+    "a1-batch-warmup-030": {
+      "name": "a1-batch-warmup-030",
+      "status": "pass",
+      "train_loss": 2.543,
+      "last_step": 200,
+      "loss_decreased": true,
+      "error": "",
+      "script": "winning_base_decoded.py",
+      "env": {
+        "BATCH_WARMUP_FRAC": "0.3"
+      },
+      "description": "Ramp batch 262K->786K over first 30% (43% more grad steps early)",
+      "tier": 0,
+      "timestamp": "2026-04-14T12:50:38.149100"
+    },
+    "a2-qkgain-475": {
+      "name": "a2-qkgain-475",
+      "status": "pass",
+      "train_loss": 2.5405,
+      "last_step": 200,
+      "loss_decreased": true,
+      "error": "",
+      "script": "winning_base_decoded.py",
+      "env": {
+        "QK_GAIN_INIT": "4.75"
+      },
+      "description": "QK-Gain 4.75 (between 4.0 and 5.25)",
+      "tier": 1,
+      "timestamp": "2026-04-14T12:55:38.238495"
+    },
+    "a2-qkgain-500": {
+      "name": "a2-qkgain-500",
+      "status": "pass",
+      "train_loss": 2.7678,
+      "last_step": 150,
+      "loss_decreased": true,
+      "error": "",
+      "script": "winning_base_decoded.py",
+      "env": {
+        "QK_GAIN_INIT": "5.0"
+      },
+      "description": "QK-Gain 5.0 (original winning value)",
+      "tier": 1,
+      "timestamp": "2026-04-14T12:55:48.166039"
+    },
+    "a2-qkgain-550": {
+      "name": "a2-qkgain-550",
+      "status": "pass",
+      "train_loss": 2.7691,
+      "last_step": 150,
+      "loss_decreased": true,
+      "error": "",
+      "script": "winning_base_decoded.py",
+      "env": {
+        "QK_GAIN_INIT": "5.5"
+      },
+      "description": "QK-Gain 5.5 (push further past 5.25)",
+      "tier": 1,
+      "timestamp": "2026-04-14T12:55:48.958185"
+    },
+    "a2-qkgain-600": {
+      "name": "a2-qkgain-600",
+      "status": "pass",
+      "train_loss": 2.5494,
+      "last_step": 200,
+      "loss_decreased": true,
+      "error": "",
+      "script": "winning_base_decoded.py",
+      "env": {
+        "QK_GAIN_INIT": "6.0"
+      },
+      "description": "QK-Gain 6.0 (aggressive sharpening)",
+      "tier": 2,
+      "timestamp": "2026-04-14T12:57:38.758168"
+    },
+    "a3-lr-025-wd-010": {
+      "name": "a3-lr-025-wd-010",
+      "status": "pass",
+      "train_loss": 2.5171,
+      "last_step": 200,
+      "loss_decreased": true,
+      "error": "",
+      "script": "winning_base_decoded.py",
+      "env": {
+        "MATRIX_LR": "0.025",
+        "SCALAR_LR": "0.023",
+        "MUON_WD": "0.10",
+        "EMBED_WD": "0.09"
+      },
+      "description": "Higher LR + higher WD (compensate for each other)",
+      "tier": 1,
+      "timestamp": "2026-04-14T13:00:05.686637"
+    },
+    "a3-lr-018": {
+      "name": "a3-lr-018",
+      "status": "pass",
+      "train_loss": 2.6129,
+      "last_step": 200,
+      "loss_decreased": true,
+      "error": "",
+      "script": "winning_base_decoded.py",
+      "env": {
+        "MATRIX_LR": "0.018",
+        "SCALAR_LR": "0.016"
+      },
+      "description": "Lower LR (more conservative)",
+      "tier": 2,
+      "timestamp": "2026-04-14T13:04:56.705787"
+    },
+    "a3-wd-012": {
+      "name": "a3-wd-012",
+      "status": "pass",
+      "train_loss": 2.5402,
+      "last_step": 200,
+      "loss_decreased": true,
+      "error": "",
+      "script": "winning_base_decoded.py",
+      "env": {
+        "MUON_WD": "0.12",
+        "EMBED_WD": "0.10"
+      },
+      "description": "Much higher WD (pushes weights toward quantization-friendly dist)",
+      "tier": 1,
+      "timestamp": "2026-04-14T13:05:03.157191"
+    },
+    "a3-wd-007": {
+      "name": "a3-wd-007",
+      "status": "pass",
+      "train_loss": 2.5464,
+      "last_step": 200,
+      "loss_decreased": true,
+      "error": "",
+      "script": "winning_base_decoded.py",
+      "env": {
+        "MUON_WD": "0.07",
+        "EMBED_WD": "0.06"
+      },
+      "description": "Lower WD (less regularization)",
+      "tier": 2,
+      "timestamp": "2026-04-14T13:05:19.400131"
+    },
+    "a4-warmdown-080": {
+      "name": "a4-warmdown-080",
+      "status": "pass",
+      "train_loss": 2.557,
+      "last_step": 200,
+      "loss_decreased": true,
+      "error": "",
+      "script": "winning_base_decoded.py",
+      "env": {
+        "WARMDOWN_FRAC": "0.80"
+      },
+      "description": "Longer warmdown (80% vs 72%)",
+      "tier": 1,
+      "timestamp": "2026-04-14T13:07:01.115369"
+    },
+    "a4-warmdown-065": {
+      "name": "a4-warmdown-065",
+      "status": "pass",
+      "train_loss": 2.5335,
+      "last_step": 200,
+      "loss_decreased": true,
+      "error": "",
+      "script": "winning_base_decoded.py",
+      "env": {
+        "WARMDOWN_FRAC": "0.65"
+      },
+      "description": "Shorter warmdown (65%)",
+      "tier": 2,
+      "timestamp": "2026-04-14T13:09:30.410439"
+    },
+    "a6-loop-2-6": {
+      "name": "a6-loop-2-6",
+      "status": "fail",
+      "train_loss": null,
+      "last_step": 0,
+      "loss_decreased": false,
+      "error": "Training failed to start",
+      "script": "winning_base_decoded.py",
+      "env": {
+        "LOOP_START": "2",
+        "LOOP_END": "6"
+      },
+      "description": "Wider recurrence (layers 2-6 instead of 3-5)",
+      "tier": 1,
+      "timestamp": "2026-04-14T13:11:53.652825"
+    },
+    "a5-ema-0993": {
+      "name": "a5-ema-0993",
+      "status": "pass",
+      "train_loss": 2.5439,
+      "last_step": 200,
+      "loss_decreased": true,
+      "error": "",
+      "script": "winning_base_decoded.py",
+      "env": {
+        "EMA_DECAY": "0.993"
+      },
+      "description": "Lower EMA decay (faster adaptation)",
+      "tier": 2,
+      "timestamp": "2026-04-14T13:14:22.565016"
+    },
+    "a4-warmdown-085-sqrt": {
+      "name": "a4-warmdown-085-sqrt",
+      "status": "pass",
+      "train_loss": 2.5684,
+      "last_step": 200,
+      "loss_decreased": true,
+      "error": "",
+      "script": "winning_base_decoded.py",
+      "env": {
+        "WARMDOWN_FRAC": "0.85",
+        "WARMDOWN_SHAPE": "sqrt"
+      },
+      "description": "Very long sqrt warmdown (85%)",
+      "tier": 1,
+      "timestamp": "2026-04-14T13:14:26.758983"
+    },
+    "a5-ema-0997": {
+      "name": "a5-ema-0997",
+      "status": "pass",
+      "train_loss": 2.7661,
+      "last_step": 150,
+      "loss_decreased": true,
+      "error": "",
+      "script": "winning_base_decoded.py",
+      "env": {
+        "EMA_DECAY": "0.997"
+      },
+      "description": "Higher EMA decay (optimal in prior sweeps at 0.997)",
+      "tier": 1,
+      "timestamp": "2026-04-14T13:14:46.606634"
     }
   },
-  "last_updated": "2026-04-14T00:33:03.638025"
+  "last_updated": "2026-04-14T13:14:46.606865"
 }

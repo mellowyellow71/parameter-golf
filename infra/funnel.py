@@ -147,6 +147,7 @@ def _provision_and_prepare(
     script: str,
     config: dict,
     machine_type: str | None = None,
+    vocab_size: int = 1024,
 ) -> tuple[InstanceInfo | None, str | None]:
     """Provision instance, wait for SSH, sync code, ensure data.
 
@@ -162,7 +163,7 @@ def _provision_and_prepare(
 
     sync_code(instance, config)
 
-    if not ensure_data(instance, config):
+    if not ensure_data(instance, config, vocab_size=vocab_size):
         delete_instance(instance.name, instance.zone, config["project"])
         return None, "Training data not available"
 
@@ -455,7 +456,9 @@ def run_qualify(
     instance = None
     try:
         # Provision (standard 8xH100)
-        instance, err = _provision_and_prepare(qualify_name, script, config)
+        vocab_size = int(env.get("VOCAB_SIZE", qualify_env.get("VOCAB_SIZE", "1024")))
+        instance, err = _provision_and_prepare(qualify_name, script, config,
+                                                vocab_size=vocab_size)
         if instance is None:
             result = QualifyResult(status="error", error=err or "provisioning failed")
             _update_stage(name, "qualify", {"status": result.status, "error": result.error})
@@ -480,16 +483,21 @@ def run_qualify(
         last_step = train_losses[-1][0] if train_losses else 0
         error = parsed.get("error") or ""
 
-        # Find val metrics closest to step 1000
+        # Find val metrics closest to step 1000 (reject step < 500 — those are just init vals)
         step_1000_bpb = None
         val_loss_1000 = None
         if val_metrics:
-            # Pick the entry closest to step 1000
-            best = min(val_metrics, key=lambda x: abs(x[0] - 1000))
-            val_loss_1000 = best[1]
-            step_1000_bpb = best[2]
-            print(f"  Val metrics at step {best[0]}: "
-                  f"val_loss={val_loss_1000:.4f} val_bpb={step_1000_bpb:.4f}")
+            # Filter out early metrics (step 0, warmup) — they're not useful
+            useful = [v for v in val_metrics if v[0] >= 500]
+            if useful:
+                best = min(useful, key=lambda x: abs(x[0] - 1000))
+                val_loss_1000 = best[1]
+                step_1000_bpb = best[2]
+                print(f"  Val metrics at step {best[0]}: "
+                      f"val_loss={val_loss_1000:.4f} val_bpb={step_1000_bpb:.4f}")
+            else:
+                print(f"  No val metrics past step 500 (only have steps: "
+                      f"{[v[0] for v in val_metrics]})")
 
         # Also use _parse_log as fallback
         if step_1000_bpb is None and parsed.get("step_1000_bpb"):

@@ -89,6 +89,11 @@ SYNC_FILES = [
     "experiment2.py",
     "train_gpt.py",
     "kernels.py",
+    "winning_base_decoded.py",
+    "arch_sp8192.py",
+    "arch_sp4096.py",
+    "arch_mini_recur.py",
+    "arch_sp1024.py",
 ]
 
 
@@ -128,15 +133,17 @@ def sync_code(instance: InstanceInfo, config: dict) -> bool:
     return ok
 
 
-def ensure_data(instance: InstanceInfo, config: dict) -> bool:
+def ensure_data(instance: InstanceInfo, config: dict, vocab_size: int = 1024) -> bool:
     """Ensure training data is available on the instance.
 
-    Checks for existing data shards. If we have at least 1 train + 1 val
-    shard, proceed immediately (training works with any shard count).
-    Only attempts download if we have zero data.
+    Supports both SP1024 and SP8192 tokenizer variants.
+    Downloads from HuggingFace if data is missing.
     """
     repo_dir = find_repo_dir(instance, config)
-    data_dir = f"{repo_dir}/data/datasets/fineweb10B_sp1024"
+    variant = f"sp{vocab_size}"
+    data_dir = f"{repo_dir}/data/datasets/fineweb10B_{variant}"
+    tok_file = f"fineweb_{vocab_size}_bpe.model"
+    tok_dir = f"{repo_dir}/data/tokenizers"
 
     # Check how many shards exist
     result = ssh_exec(instance, config,
@@ -149,57 +156,34 @@ def ensure_data(instance: InstanceInfo, config: dict) -> bool:
 
     # Check tokenizer
     result3 = ssh_exec(instance, config,
-        f"ls {repo_dir}/data/tokenizers/fineweb_1024_bpe.model 2>/dev/null | wc -l")
+        f"ls {tok_dir}/{tok_file} 2>/dev/null | wc -l")
     has_tokenizer = int(result3.stdout.strip() or "0") >= 1
 
-    if train_count >= 1 and val_count >= 1 and has_tokenizer:
-        print(f"  Training data ready: {train_count} train + {val_count} val shards")
+    if train_count >= 1 and has_tokenizer:
+        print(f"  Data ready ({variant}): {train_count} train + {val_count} val shards")
         return True
 
-    # If we have train shards but are missing tokenizer, try to grab it from GCS (fast)
-    if train_count >= 1 and not has_tokenizer:
-        print(f"  Have {train_count} train shards, fetching tokenizer from GCS...")
-        data_bucket = config.get("data_bucket", "parameter-golf-data")
-        tok_dir = f"{repo_dir}/data/tokenizers"
-        tok_gcs = f"gs://{data_bucket}/tokenizers/fineweb_1024_bpe.model"
-        r = ssh_exec(instance, config,
-            f"mkdir -p {tok_dir} && gsutil cp {tok_gcs} {tok_dir}/fineweb_1024_bpe.model",
-            timeout=60)
-        if r.returncode == 0:
-            print("  Tokenizer fetched from GCS. Proceeding (val shards optional for smoke).")
-            return True
-        print(f"  GCS tokenizer fetch failed: {r.stderr[:200]}. Trying HuggingFace...")
-
-    if train_count >= 1:
-        # Have train data, try quick tokenizer + val download
-        data_bucket = config.get("data_bucket", "parameter-golf-data")
-        tok_dir = f"{repo_dir}/data/tokenizers"
-        val_dir = f"{repo_dir}/data/datasets/fineweb10B_sp1024"
-        # Try to get val shard + tokenizer from GCS
-        r = ssh_exec(instance, config,
-            f"mkdir -p {tok_dir} {val_dir} && "
-            f"gsutil cp gs://{data_bucket}/tokenizers/fineweb_1024_bpe.model {tok_dir}/ 2>/dev/null; "
-            f"gsutil cp 'gs://{data_bucket}/datasets/fineweb10B_sp1024/fineweb_val_000000001.bin' {val_dir}/ 2>/dev/null; "
-            f"ls {tok_dir}/fineweb_1024_bpe.model",
-            timeout=90)
-        if r.returncode == 0:
-            print("  Got tokenizer from GCS. Proceeding.")
-            return True
-        print(f"  Could not get tokenizer from GCS. Training may fail without tokenizer.")
-        # Return True anyway — let training fail gracefully rather than blocking here
-        return True
-
-    # Only download if we have no data at all
-    print(f"  Missing data (train={train_count}, val={val_count}, tok={has_tokenizer}). Downloading minimal set...")
+    # Download what's missing via HuggingFace
+    print(f"  Missing {variant} data (train={train_count}, tok={has_tokenizer}). Downloading...")
     result = ssh_exec(instance, config,
-        f"python3 {repo_dir}/data/cached_challenge_fineweb.py --variant sp1024 --train-shards 1",
-        timeout=180)
+        f"python3 {repo_dir}/data/cached_challenge_fineweb.py --variant {variant} --train-shards 9",
+        timeout=600)
 
     if result.returncode == 0:
-        print("  Minimal data download complete")
+        print(f"  {variant} data download complete")
         return True
 
-    print(f"  Data download failed. Cannot proceed.")
+    # Fallback: try with fewer shards
+    print(f"  Full download failed, trying minimal (1 shard)...")
+    result = ssh_exec(instance, config,
+        f"python3 {repo_dir}/data/cached_challenge_fineweb.py --variant {variant} --train-shards 1",
+        timeout=300)
+
+    if result.returncode == 0:
+        print(f"  Minimal {variant} data download complete")
+        return True
+
+    print(f"  Data download failed for {variant}.")
     return False
 
 
